@@ -10,7 +10,7 @@ export const Education = () => {
       status: "Currently Pursuing"
     },
     {
-      degree: "PG Diploma in Data Engineering",
+      degree: "PG Diploma Programme in Data Engineering",
       school: "Intellipaat, Bangalore",
       period: "May 2024 - May 2025"
     },
@@ -29,7 +29,7 @@ export const Education = () => {
   ];
 
   const certifications = [
-    "PG Diploma in Data Engineering: Profile Link",
+    "PG Diploma Programme in Data Engineering: Profile Link",
     "Udemy - Machine Learning A-Z: Hands-on Python & R In Data Science",
     "Hacker Rank - Profile link & Kaggle Competition: Profile link",
     "Secured 5-star Gold Badge in Python and Secured 5-star Gold Badge rating in SQL"

@@ -42,13 +42,22 @@ export const Experience = () => {
     },
     {
       title: "Assistant Engineer",
-      company: "Dreamland India Pvt. Ltd",
+      company: "TUV Rheinland India Pvt. Ltd",
       location: "Bangalore, India",
       period: "Dec 2018 – Jul 2020",
       description: [
         "Visualizing KPI and Business Concepts in Power BI:",
         "Proficient in Data Reporting and Data Visualization through Power BI, extracting meaningful insights from datalake using SQL.",
         "Developed and maintained robust Data Pipelines and ETL processes using SQL and SSMS for streamlined data management."
+      ]
+    },
+    {
+      title: "Junior Engineer",
+      company: "SKC Environ Lab Pvt. Ltd",
+      location: "Bangalore, India",
+      period: "Sep 2017 – Nov 2019",
+      description: [
+        "Pioneered the design and analysis of various tests using Catia V5, while also preparing comprehensive test reports by collecting and validating measured data and results."
       ]
     }
   ];

@@ -8,7 +8,7 @@ export const Projects = () => {
       title: "Retirement Planning Simulation App",
       description: "Developed a Python-based retirement planning simulation app using Monte Carlo techniques and scenario modeling to forecast 35-year financial outcomes, enabling strategic investment in superannuation, foreign equities, and bitcoin; grew project to $3.5M from minimal input through dynamic asset glide path and delivered actionable recommendations on asset allocation, lifestyle upgrades, and drawdown planning.",
       tech: ["Python", "Monte Carlo", "Financial Modeling", "Streamlit"],
-      link: "#"
+      link: "https://financialadvisornz.streamlit.app/"
     },
     {
       title: "Customer Segmentation & Marketing ROI",
@@ -20,13 +20,13 @@ export const Projects = () => {
       title: "Expense Tracking App",
       description: "Developed a Python-based Streamlit app for tracking shared expenses, featuring participant management, multiple split methods (equal, manual, person-specific), real-time balance calculations, editable transaction logs, and PDF export—ideal for trips and shared budgets.",
       tech: ["Python", "Streamlit", "PDF Export", "Real-time Calculations"],
-      link: "#"
+      link: "https://github.com/bharathssa/Expense-Tracker-with-Detailed-Transactions/tree/main"
     },
     {
       title: "Stock Analysis Web Application",
       description: "Developed a comprehensive stock analysis web application using Python and Streamlit, designed for Indian equity markets. The app integrates real-time data from Google Sheets, computes technical indicators (MACD, RSI, ADX, OBV), and presents dynamic candlestick charts with trend insights. Implemented fundamental analysis and NLP-based sentiment scoring from live news headlines to deliver buy/hold/sell signals, empowering users to make informed investment decisions through an intuitive dashboard.",
       tech: ["Python", "Streamlit", "Technical Analysis", "NLP", "Sentiment Analysis"],
-      link: "#"
+      link: "https://github.com/bharathssa/Comprehensive-Indian-Stock-Analyzer"
     },
     {
       title: "Inventory Optimization & Demand Forecasting",
