@@ -1,6 +1,6 @@
 
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere, Text } from '@react-three/drei';
+import { Text } from '@react-three/drei';
 import { useRef, useState } from 'react';
 import * as THREE from 'three';
 
@@ -28,9 +28,10 @@ const FloatingIcon = ({ position, text, color, icon }: {
       onPointerOut={() => setHovered(false)}
       scale={hovered ? 1.2 : 1}
     >
-      <Sphere args={[0.3]}>
+      <mesh>
+        <sphereGeometry args={[0.3]} />
         <meshStandardMaterial color={color} transparent opacity={0.8} />
-      </Sphere>
+      </mesh>
       <Text
         position={[0, 0, 0.31]}
         fontSize={0.3}
@@ -74,9 +75,10 @@ const ContactSphereScene = () => {
   return (
     <group ref={groupRef}>
       {/* Central wireframe sphere */}
-      <Sphere args={[3, 16, 16]}>
+      <mesh>
+        <sphereGeometry args={[3, 16, 16]} />
         <meshBasicMaterial wireframe color="#3B82F6" transparent opacity={0.1} />
-      </Sphere>
+      </mesh>
       
       {/* Contact items */}
       {contactItems.map((item, index) => (
