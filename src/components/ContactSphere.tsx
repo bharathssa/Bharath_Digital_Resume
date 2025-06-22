@@ -28,7 +28,9 @@ const FloatingIcon = ({ position, text, color, icon }: {
       onPointerOut={() => setHovered(false)}
       scale={hovered ? 1.2 : 1}
     >
-      <Sphere args={[0.3]} material-color={color} material-transparent material-opacity={0.8} />
+      <Sphere args={[0.3]}>
+        <meshStandardMaterial color={color} transparent opacity={0.8} />
+      </Sphere>
       <Text
         position={[0, 0, 0.31]}
         fontSize={0.3}
