@@ -3,30 +3,32 @@ export const About = () => {
   console.log("About component rendered");
 
   const roles = [
-    {
-      title: "Software Developer",
-      icon: "💎",
-      description: "Building scalable applications with modern technologies",
-      gradient: "from-blue-500 to-cyan-500"
-    },
-    {
-      title: "React Native Developer", 
-      icon: "📱",
-      description: "Creating cross-platform mobile experiences",
-      gradient: "from-cyan-500 to-teal-500"
-    },
-    {
-      title: "Backend Developer",
-      icon: "🔧",
-      description: "Designing robust server-side architectures",
-      gradient: "from-purple-500 to-pink-500"
-    },
-    {
+     {
       title: "Data Engineer/Analyst",
       icon: "📊",
       description: "Transforming data into actionable insights",
       gradient: "from-pink-500 to-orange-500"
+    },
+    {
+      title: "Machine Learning Engineer",
+      icon: "🤖",
+      description: "Building intelligent systems with AI",
+      gradient: "from-blue-500 to-purple-500"
+    },
+    
+    {
+      title: "Data Scientist",
+      icon: "🔬",
+      description: "Extracting knowledge from complex datasets",
+      gradient: "from-purple-500 to-pink-500"
+    },
+    {
+      title: "Data Visualization Expert",
+      icon: "📈",
+      description: "Creating compelling visual narratives from data",
+      gradient: "from-teal-500 to-cyan-500"
     }
+   
   ];
 
   return (
@@ -44,10 +46,9 @@ export const About = () => {
 
         <div className="mb-16">
           <p className="text-lg text-gray-300 leading-relaxed max-w-4xl mx-auto text-center">
-            I'm a proficient Full Stack Developer with extensive experience in Python and SQL, 
-            specializing in Machine Learning, Django, and Data Engineering. I also possess expertise in 
-            JavaScript and frameworks such as React and Node.js, along with backend development. 
-            Additionally, I have hands-on experience with AWS services, Apache Spark, and Snowflake.
+            Highly skilled Data Engineer with 6+ years of expertise in Machine Learning, Model Deployment, Data pipelines, Data Analytics, Data
+Visualization. A passionate AI enthusiast focused on Deep Learning and Time Series Analysis, dedicated to driving impactful solutions through
+cutting-edge technologies. Additionally, I have hands-on experience with Azure services, AWS services, Apache Spark, SAP, and Snowflake.
           </p>
         </div>
 

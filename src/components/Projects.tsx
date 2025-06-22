@@ -75,15 +75,40 @@ export const Projects = () => {
               </div>
 
               <div className="flex space-x-3">
-                <Button size="sm" variant="outline" className="flex-1 border-blue-400/30 text-blue-400 hover:bg-blue-400/10">
-                  <Github size={16} className="mr-2" />
-                  Code
-                </Button>
-                <Button size="sm" variant="outline" className="flex-1 border-purple-400/30 text-purple-400 hover:bg-purple-400/10">
-                  <ExternalLink size={16} className="mr-2" />
-                  Demo
-                </Button>
-              </div>
+  <a
+    href={project.link.startsWith("http") ? project.link : "#"}
+    target="_blank"
+    rel="noreferrer"
+    className="flex-1"
+  >
+    <Button
+      size="sm"
+      variant="outline"
+      className="w-full border-blue-400/30 text-blue-400 hover:bg-blue-400/10"
+    >
+      <Github size={16} className="mr-2" />
+      Code
+    </Button>
+  </a>
+
+  <a
+    href={project.link.startsWith("http") ? project.link : "#"}
+    target="_blank"
+    rel="noreferrer"
+    className="flex-1"
+  >
+    <Button
+      size="sm"
+      variant="outline"
+      className="w-full border-purple-400/30 text-purple-400 hover:bg-purple-400/10"
+    >
+      <ExternalLink size={16} className="mr-2" />
+      Demo
+    </Button>
+  </a>
+</div>
+
+              
             </div>
           ))}
         </div>

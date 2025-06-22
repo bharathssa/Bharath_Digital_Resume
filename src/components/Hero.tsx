@@ -29,10 +29,10 @@ export const Hero = () => {
           </h1>
           
           <div className="text-xl md:text-2xl text-gray-300 mb-2">
-            <span className="text-cyan-400">Full Stack Developer</span>
+            <span className="text-cyan-400">FinTech Business Analyst</span>
           </div>
           <div className="text-xl md:text-2xl text-gray-300 mb-8">
-            and <span className="text-purple-400">Data Enthusiast</span>
+            and <span className="text-purple-400">Data Engineer</span>
           </div>
 
           <p className="text-lg text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
@@ -41,17 +41,19 @@ export const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg shadow-cyan-500/25"
-            >
-              <Mail className="mr-2" size={20} />
-              Get In Touch
-            </Button>
+            <a href="mailto:bharathssa16@gmail.com">
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg shadow-cyan-500/25"
+              >
+                <Mail className="mr-2" size={20} />
+                Get In Touch
+              </Button>
+            </a>
             
             <div className="flex space-x-4">
               <a 
-                href="https://linkedin.com/in/bharath-chandran" 
+                href="https://www.linkedin.com/in/bharathchandran98/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="p-3 rounded-full bg-slate-800/50 backdrop-blur-sm text-gray-300 hover:text-cyan-400 hover:bg-slate-700/50 transition-all duration-300 hover:scale-110 border border-slate-700/50 hover:border-cyan-400/50"
@@ -59,7 +61,7 @@ export const Hero = () => {
                 <Linkedin size={24} />
               </a>
               <a 
-                href="https://github.com/bharath-chandran" 
+                href="https://github.com/bharathssa" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="p-3 rounded-full bg-slate-800/50 backdrop-blur-sm text-gray-300 hover:text-purple-400 hover:bg-slate-700/50 transition-all duration-300 hover:scale-110 border border-slate-700/50 hover:border-purple-400/50"
