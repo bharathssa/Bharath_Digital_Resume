@@ -5,7 +5,7 @@ import { ContactSphere } from "./ContactSphere";
 
 export const Contact = () => {
   return (
-    <section id="contact" className="py-20 bg-slate-800/30 relative">
+    <section id="contact" className="py-20 bg-gradient-to-b from-slate-800/20 to-slate-900/30 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -19,13 +19,17 @@ export const Contact = () => {
         </div>
 
         {/* 3D Contact Sphere */}
-        <div className="mb-16">
+        <div className="mb-16 bg-slate-800/20 rounded-2xl p-8 border border-slate-600/30">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-semibold text-cyan-400 mb-4">Interactive Contact Sphere</h3>
+            <p className="text-gray-400">Hover over the spheres to interact</p>
+          </div>
           <ContactSphere />
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
-            <div className="flex items-center space-x-4 group">
+            <div className="flex items-center space-x-4 group bg-slate-800/20 p-4 rounded-xl border border-slate-600/20 hover:border-blue-400/40 transition-all duration-300">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <Mail className="text-white" size={20} />
               </div>
@@ -35,7 +39,7 @@ export const Contact = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-4 group">
+            <div className="flex items-center space-x-4 group bg-slate-800/20 p-4 rounded-xl border border-slate-600/20 hover:border-blue-400/40 transition-all duration-300">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <Phone className="text-white" size={20} />
               </div>
@@ -45,7 +49,7 @@ export const Contact = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-4 group">
+            <div className="flex items-center space-x-4 group bg-slate-800/20 p-4 rounded-xl border border-slate-600/20 hover:border-blue-400/40 transition-all duration-300">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <MapPin className="text-white" size={20} />
               </div>
@@ -60,7 +64,7 @@ export const Contact = () => {
                 href="linkedin.com/in/bharathchandran98/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-3 bg-slate-800/50 rounded-full text-blue-400 hover:bg-blue-400/10 border border-blue-400/30 hover:border-blue-400/60 transition-all duration-300 hover:scale-110"
+                className="p-3 bg-slate-800/30 rounded-full text-blue-400 hover:bg-blue-400/10 border border-blue-400/20 hover:border-blue-400/60 transition-all duration-300 hover:scale-110"
               >
                 <Linkedin size={24} />
               </a>
@@ -68,14 +72,14 @@ export const Contact = () => {
                 href="https://github.com/bharathssa" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-3 bg-slate-800/50 rounded-full text-purple-400 hover:bg-purple-400/10 border border-purple-400/30 hover:border-purple-400/60 transition-all duration-300 hover:scale-110"
+                className="p-3 bg-slate-800/30 rounded-full text-purple-400 hover:bg-purple-400/10 border border-purple-400/20 hover:border-purple-400/60 transition-all duration-300 hover:scale-110"
               >
                 <Github size={24} />
               </a>
             </div>
           </div>
 
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg p-8">
+          <div className="bg-slate-800/30 backdrop-blur-sm border border-slate-600/30 rounded-lg p-8">
             <h3 className="text-2xl font-semibold text-blue-400 mb-6">Send me a message</h3>
             
             <form className="space-y-6">
@@ -86,7 +90,7 @@ export const Contact = () => {
                 <input
                   type="text"
                   id="name"
-                  className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-gray-300 focus:outline-none focus:border-blue-400 transition-colors duration-300"
+                  className="w-full px-4 py-3 bg-slate-900/30 border border-slate-500/30 rounded-lg text-gray-300 focus:outline-none focus:border-blue-400 transition-colors duration-300"
                   placeholder="Your Name"
                 />
               </div>
@@ -98,7 +102,7 @@ export const Contact = () => {
                 <input
                   type="email"
                   id="email"
-                  className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-gray-300 focus:outline-none focus:border-blue-400 transition-colors duration-300"
+                  className="w-full px-4 py-3 bg-slate-900/30 border border-slate-500/30 rounded-lg text-gray-300 focus:outline-none focus:border-blue-400 transition-colors duration-300"
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -110,7 +114,7 @@ export const Contact = () => {
                 <textarea
                   id="message"
                   rows={5}
-                  className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-gray-300 focus:outline-none focus:border-blue-400 transition-colors duration-300 resize-none"
+                  className="w-full px-4 py-3 bg-slate-900/30 border border-slate-500/30 rounded-lg text-gray-300 focus:outline-none focus:border-blue-400 transition-colors duration-300 resize-none"
                   placeholder="Your message here..."
                 ></textarea>
               </div>
