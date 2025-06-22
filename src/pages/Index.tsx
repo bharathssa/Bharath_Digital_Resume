@@ -7,18 +7,22 @@ import { Projects } from "@/components/Projects";
 import { Education } from "@/components/Education";
 import { Contact } from "@/components/Contact";
 import { Navigation } from "@/components/Navigation";
+import { StarField } from "@/components/StarField";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <Navigation />
-      <Hero />
-      <About />
-      <Experience />
-      <Skills />
-      <Projects />
-      <Education />
-      <Contact />
+    <div className="min-h-screen relative">
+      <StarField />
+      <div className="relative z-10">
+        <Navigation />
+        <Hero />
+        <About />
+        <Experience />
+        <Skills />
+        <Projects />
+        <Education />
+        <Contact />
+      </div>
     </div>
   );
 };

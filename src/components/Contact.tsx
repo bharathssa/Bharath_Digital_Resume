@@ -1,10 +1,11 @@
 
 import { Mail, Phone, MapPin, Linkedin, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ContactSphere } from "./ContactSphere";
 
 export const Contact = () => {
   return (
-    <section id="contact" className="py-20 bg-slate-800/30">
+    <section id="contact" className="py-20 bg-slate-800/30 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -15,6 +16,11 @@ export const Contact = () => {
             Ready to collaborate on your next data science project or discuss opportunities? 
             Let's turn data into insights together.
           </p>
+        </div>
+
+        {/* 3D Contact Sphere */}
+        <div className="mb-16">
+          <ContactSphere />
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">

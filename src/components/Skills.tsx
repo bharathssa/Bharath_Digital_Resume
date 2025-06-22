@@ -1,4 +1,6 @@
 
+import { SkillsSphere } from "./SkillsSphere";
+
 export const Skills = () => {
   const skillCategories = [
     {
@@ -35,6 +37,11 @@ export const Skills = () => {
             Skills & Technologies
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full"></div>
+        </div>
+
+        {/* 3D Skills Sphere */}
+        <div className="mb-16">
+          <SkillsSphere />
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -63,49 +63,66 @@ export const Experience = () => {
   ];
 
   return (
-    <section id="experience" className="py-20 bg-slate-800/30">
+    <section id="experience" className="py-20 bg-slate-800/30 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Work Experience
+            Career Journey
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full"></div>
         </div>
 
-        <div className="space-y-8">
-          {experiences.map((exp, index) => (
-            <div key={index} className="relative pl-8 border-l-2 border-blue-400/30">
-              <div className="absolute -left-2 top-0 w-4 h-4 bg-blue-400 rounded-full"></div>
-              
-              <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg p-6 hover:bg-slate-700/50 transition-all duration-300 hover:scale-[1.02]">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                  <h3 className="text-xl font-semibold text-blue-400 mb-2 md:mb-0">
-                    {exp.title}
-                  </h3>
-                  <div className="flex items-center text-gray-400 text-sm">
-                    <Calendar size={16} className="mr-2" />
-                    {exp.period}
-                  </div>
-                </div>
-                
-                <div className="flex items-center text-purple-400 font-medium mb-2">
-                  <span className="mr-4">{exp.company}</span>
-                  <div className="flex items-center text-gray-400 text-sm">
-                    <MapPin size={16} className="mr-1" />
-                    {exp.location}
-                  </div>
-                </div>
+        <div className="relative">
+          {/* Central vertical line */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-400 via-purple-400 to-blue-400 h-full rounded-full opacity-60"></div>
 
-                <ul className="list-disc list-inside space-y-2 text-gray-300 mt-4">
-                  {exp.description.map((item, itemIndex) => (
-                    <li key={itemIndex} className="leading-relaxed">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+          <div className="space-y-16">
+            {experiences.map((exp, index) => (
+              <div key={index} className={`relative flex items-center ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
+                {/* Timeline dot */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full border-4 border-slate-900 z-10 shadow-lg"></div>
+                
+                {/* Experience card */}
+                <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
+                  <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-lg p-6 hover:bg-slate-700/60 transition-all duration-300 hover:scale-105 shadow-xl">
+                    {/* Date indicator */}
+                    <div className={`absolute top-4 ${index % 2 === 0 ? '-right-2' : '-left-2'} w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse`}></div>
+                    
+                    <div className="flex flex-col mb-4">
+                      <h3 className="text-xl font-semibold text-blue-400 mb-2">
+                        {exp.title}
+                      </h3>
+                      <div className="flex items-center text-gray-400 text-sm mb-2">
+                        <Calendar size={16} className="mr-2" />
+                        {exp.period}
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center text-purple-400 font-medium mb-2">
+                      <span className="mr-4">{exp.company}</span>
+                      <div className="flex items-center text-gray-400 text-sm">
+                        <MapPin size={16} className="mr-1" />
+                        {exp.location}
+                      </div>
+                    </div>
+
+                    <ul className="list-disc list-inside space-y-2 text-gray-300 mt-4">
+                      {exp.description.slice(0, 3).map((item, itemIndex) => (
+                        <li key={itemIndex} className="leading-relaxed text-sm">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    {/* Progress indicator */}
+                    <div className="mt-4 flex justify-center">
+                      <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

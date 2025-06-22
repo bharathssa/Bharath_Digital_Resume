@@ -38,8 +38,12 @@ export const About = () => {
           <div className="relative">
             <div className="w-full h-96 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl border border-slate-700/50 backdrop-blur-sm flex items-center justify-center">
               <div className="text-center">
-                <div className="w-32 h-32 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full mx-auto mb-6 flex items-center justify-center text-4xl font-bold text-white">
-                  BC
+                <div className="w-48 h-48 rounded-full mx-auto mb-6 overflow-hidden border-4 border-gradient-to-br from-blue-400 to-purple-400 shadow-2xl">
+                  <img 
+                    src="/lovable-uploads/9f1da6e7-2ce1-4338-b04d-a156e2530dab.png" 
+                    alt="Bharath Chandran" 
+                    className="w-full h-full object-cover object-center"
+                  />
                 </div>
                 <div className="text-xl text-gray-300">Data Engineer</div>
                 <div className="text-lg text-gray-400">Auckland, New Zealand</div>
