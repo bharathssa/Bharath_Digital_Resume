@@ -1,54 +1,93 @@
 
 export const About = () => {
+  console.log("About component rendered");
+
+  const roles = [
+    {
+      title: "Software Developer",
+      icon: "💎",
+      description: "Building scalable applications with modern technologies",
+      gradient: "from-blue-500 to-cyan-500"
+    },
+    {
+      title: "React Native Developer", 
+      icon: "📱",
+      description: "Creating cross-platform mobile experiences",
+      gradient: "from-cyan-500 to-teal-500"
+    },
+    {
+      title: "Backend Developer",
+      icon: "🔧",
+      description: "Designing robust server-side architectures",
+      gradient: "from-purple-500 to-pink-500"
+    },
+    {
+      title: "Data Engineer/Analyst",
+      icon: "📊",
+      description: "Transforming data into actionable insights",
+      gradient: "from-pink-500 to-orange-500"
+    }
+  ];
+
   return (
     <section id="about" className="py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            About Me
+          <div className="mb-4">
+            <span className="text-cyan-400 text-lg font-medium tracking-wide uppercase">Introduction</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+            Overview.
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 mx-auto rounded-full"></div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <p className="text-lg text-gray-300 leading-relaxed">
-              I am a passionate AI enthusiast focused on Deep Learning and Time Series Analysis, 
-              dedicated to driving impactful solutions through cutting-edge technologies.
-            </p>
-            
-            <p className="text-lg text-gray-300 leading-relaxed">
-              With over 6 years of experience in the field, I specialize in building robust data 
-              pipelines, implementing machine learning models, and creating scalable analytics solutions 
-              that drive business value.
-            </p>
+        <div className="mb-16">
+          <p className="text-lg text-gray-300 leading-relaxed max-w-4xl mx-auto text-center">
+            I'm a proficient Full Stack Developer with extensive experience in Python and SQL, 
+            specializing in Machine Learning, Django, and Data Engineering. I also possess expertise in 
+            JavaScript and frameworks such as React and Node.js, along with backend development. 
+            Additionally, I have hands-on experience with AWS services, Apache Spark, and Snowflake.
+          </p>
+        </div>
 
-            <div className="grid grid-cols-2 gap-6 mt-8">
-              <div className="text-center p-6 bg-slate-800/50 rounded-lg backdrop-blur-sm border border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300">
-                <div className="text-3xl font-bold text-blue-400 mb-2">6+</div>
-                <div className="text-gray-300">Years Experience</div>
-              </div>
-              <div className="text-center p-6 bg-slate-800/50 rounded-lg backdrop-blur-sm border border-slate-700/50 hover:bg-slate-700/50 transition-all duration-300">
-                <div className="text-3xl font-bold text-purple-400 mb-2">50+</div>
-                <div className="text-gray-300">Projects Completed</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="w-full h-96 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl border border-slate-700/50 backdrop-blur-sm flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-48 h-48 rounded-full mx-auto mb-6 overflow-hidden border-4 border-gradient-to-br from-blue-400 to-purple-400 shadow-2xl">
-                  <img 
-                    src="/lovable-uploads/9f1da6e7-2ce1-4338-b04d-a156e2530dab.png" 
-                    alt="Bharath Chandran" 
-                    className="w-full h-full object-cover object-center"
-                  />
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {roles.map((role, index) => (
+            <div 
+              key={index}
+              className="group relative bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 hover:bg-slate-700/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer"
+              style={{
+                animationDelay: `${index * 0.1}s`
+              }}
+            >
+              {/* Gradient border effect */}
+              <div className={`absolute inset-0 bg-gradient-to-r ${role.gradient} rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500`}></div>
+              
+              {/* Content */}
+              <div className="relative z-10">
+                <div className="text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                  {role.icon}
                 </div>
-                <div className="text-xl text-gray-300">Data Engineer</div>
-                <div className="text-lg text-gray-400">Auckland, New Zealand</div>
+                <h3 className={`text-xl font-semibold mb-3 bg-gradient-to-r ${role.gradient} bg-clip-text text-transparent`}>
+                  {role.title}
+                </h3>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  {role.description}
+                </p>
+              </div>
+
+              {/* Animated background pattern */}
+              <div className="absolute top-0 right-0 w-20 h-20 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
+                <div className="w-full h-full bg-gradient-to-br from-white to-transparent rounded-full animate-pulse"></div>
               </div>
             </div>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <div className="inline-flex items-center space-x-2 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-full px-6 py-3">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <span className="text-gray-300">Available for new opportunities</span>
           </div>
         </div>
       </div>
