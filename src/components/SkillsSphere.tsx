@@ -39,17 +39,17 @@ const RotatingSphere = () => {
   });
 
   const skills = [
-    { text: "Python", position: [2, 1, 1], color: "#3B82F6" },
-    { text: "TensorFlow", position: [-2, 1, -1], color: "#8B5CF6" },
-    { text: "SQL", position: [1, -2, 1], color: "#06B6D4" },
-    { text: "Power BI", position: [-1, -1, 2], color: "#F59E0B" },
-    { text: "Azure", position: [2, -1, -1], color: "#EF4444" },
-    { text: "Machine Learning", position: [-2, 0, 1], color: "#10B981" },
-    { text: "Pandas", position: [1, 2, -1], color: "#F97316" },
-    { text: "React", position: [-1, 2, 1], color: "#3B82F6" },
-    { text: "NumPy", position: [0, -2, -2], color: "#8B5CF6" },
-    { text: "Sklearn", position: [2, 0, 2], color: "#06B6D4" },
-  ] as const;
+    { text: "Python", position: [2, 1, 1] as [number, number, number], color: "#3B82F6" },
+    { text: "TensorFlow", position: [-2, 1, -1] as [number, number, number], color: "#8B5CF6" },
+    { text: "SQL", position: [1, -2, 1] as [number, number, number], color: "#06B6D4" },
+    { text: "Power BI", position: [-1, -1, 2] as [number, number, number], color: "#F59E0B" },
+    { text: "Azure", position: [2, -1, -1] as [number, number, number], color: "#EF4444" },
+    { text: "Machine Learning", position: [-2, 0, 1] as [number, number, number], color: "#10B981" },
+    { text: "Pandas", position: [1, 2, -1] as [number, number, number], color: "#F97316" },
+    { text: "React", position: [-1, 2, 1] as [number, number, number], color: "#3B82F6" },
+    { text: "NumPy", position: [0, -2, -2] as [number, number, number], color: "#8B5CF6" },
+    { text: "Sklearn", position: [2, 0, 2] as [number, number, number], color: "#06B6D4" },
+  ];
 
   return (
     <group ref={groupRef}>

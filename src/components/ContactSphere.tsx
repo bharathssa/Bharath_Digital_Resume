@@ -61,13 +61,13 @@ const ContactSphereScene = () => {
   });
 
   const contactItems = [
-    { text: "Email", position: [2, 0, 0], color: "#3B82F6", icon: "✉" },
-    { text: "LinkedIn", position: [-2, 0, 0], color: "#0A66C2", icon: "💼" },
-    { text: "GitHub", position: [0, 2, 0], color: "#8B5CF6", icon: "💻" },
-    { text: "Phone", position: [0, -2, 0], color: "#10B981", icon: "📞" },
-    { text: "Location", position: [1.4, 1.4, 0], color: "#F59E0B", icon: "📍" },
-    { text: "Projects", position: [-1.4, -1.4, 0], color: "#EF4444", icon: "🚀" },
-  ] as const;
+    { text: "Email", position: [2, 0, 0] as [number, number, number], color: "#3B82F6", icon: "✉" },
+    { text: "LinkedIn", position: [-2, 0, 0] as [number, number, number], color: "#0A66C2", icon: "💼" },
+    { text: "GitHub", position: [0, 2, 0] as [number, number, number], color: "#8B5CF6", icon: "💻" },
+    { text: "Phone", position: [0, -2, 0] as [number, number, number], color: "#10B981", icon: "📞" },
+    { text: "Location", position: [1.4, 1.4, 0] as [number, number, number], color: "#F59E0B", icon: "📍" },
+    { text: "Projects", position: [-1.4, -1.4, 0] as [number, number, number], color: "#EF4444", icon: "🚀" },
+  ];
 
   return (
     <group ref={groupRef}>
