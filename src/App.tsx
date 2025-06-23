@@ -19,8 +19,9 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <StarField/>
+      
       <Navigation />
+      <StarField/>
       <Toaster />
       <Sonner />
       {/* Sections — order matters for scroll */}
