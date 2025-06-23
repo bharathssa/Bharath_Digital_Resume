@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
 
 // Components as Pages
-import {Hero} from "@/components/Hero.tsx";          // Assuming this is your landing page
+      // Assuming this is your landing page
 import {About} from "@/components/About.tsx";
 import {Experience} from "@/components/Experience.tsx";
 import {Skills} from "@/components/Skills.tsx";
@@ -23,7 +23,7 @@ const App = () => (
       <Sonner />
       <HashRouter>
         <Routes>
-          <Route path="/" element={<Hero />} />
+          
           <Route path="/about" element={<About />} />
           <Route path="/experience" element={<Experience />} />
           <Route path="/skills" element={<Skills />} />
