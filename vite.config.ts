@@ -3,11 +3,8 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-// ✅ UPDATE: Set correct base path for GitHub Pages
-const repoName = "Bharath_Digital_Resume";
-
 export default defineConfig(({ mode }) => ({
-  base: `/${repoName}/`, // ✅ crucial for GitHub Pages to find assets correctly
+  base: "/Bharath_Digital_Resume/", // 👈 Add this line
   server: {
     host: "::",
     port: 8080,
