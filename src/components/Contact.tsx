@@ -61,7 +61,7 @@ export const Contact = () => {
 
             <div className="flex space-x-4 pt-6">
               <a 
-                href="https://www.linkedin.com/in/bharathchandran98/" 
+                href="linkedin.com/in/bharathchandran98/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="p-3 bg-slate-800/30 rounded-full text-blue-400 hover:bg-blue-400/10 border border-blue-400/20 hover:border-blue-400/60 transition-all duration-300 hover:scale-110"
