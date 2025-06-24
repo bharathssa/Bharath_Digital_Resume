@@ -1,9 +1,31 @@
-
+import { useRef } from "react";
+import emailjs from "@emailjs/browser";
 import { Mail, Phone, MapPin, Linkedin, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ContactSphere } from "./ContactSphere";
 
 export const Contact = () => {
+  const form = useRef<HTMLFormElement>(null);
+
+  const sendEmail = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_pjcsz18",
+        "template_agvakb5",
+        form.current!,
+        "JyahNpsxKrJARL14K"
+      )
+      .then(() => {
+        alert("Message sent successfully!");
+        form.current?.reset();
+      })
+      .catch(() => {
+        alert("Something went wrong. Please try again.");
+      });
+  };
+
   return (
     <section id="contact" className="py-20 bg-gradient-to-b from-slate-800/20 to-slate-900/30 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -82,7 +104,7 @@ export const Contact = () => {
           <div className="bg-slate-800/30 backdrop-blur-sm border border-slate-600/30 rounded-lg p-8">
             <h3 className="text-2xl font-semibold text-blue-400 mb-6">Send me a message</h3>
             
-            <form className="space-y-6">
+            <form ref={form} onSubmit={sendEmail} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                   Name
@@ -90,6 +112,8 @@ export const Contact = () => {
                 <input
                   type="text"
                   id="name"
+                  name="name"
+                  required
                   className="w-full px-4 py-3 bg-slate-900/30 border border-slate-500/30 rounded-lg text-gray-300 focus:outline-none focus:border-blue-400 transition-colors duration-300"
                   placeholder="Your Name"
                 />
@@ -102,6 +126,8 @@ export const Contact = () => {
                 <input
                   type="email"
                   id="email"
+                  name="email"
+                  required
                   className="w-full px-4 py-3 bg-slate-900/30 border border-slate-500/30 rounded-lg text-gray-300 focus:outline-none focus:border-blue-400 transition-colors duration-300"
                   placeholder="your.email@example.com"
                 />
@@ -113,6 +139,8 @@ export const Contact = () => {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
+                  required
                   rows={5}
                   className="w-full px-4 py-3 bg-slate-900/30 border border-slate-500/30 rounded-lg text-gray-300 focus:outline-none focus:border-blue-400 transition-colors duration-300 resize-none"
                   placeholder="Your message here..."
