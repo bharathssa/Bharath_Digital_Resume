@@ -157,7 +157,7 @@ export const StarField = () => {
     <>
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 w-full h-full -z-0"
+        className="fixed top-0 left-0 w-screen h-screen z-[-1] pointer-events-none"
         style={{ background: 'linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #0a0a1a 100%)' }}
       />
       <div className="moving-spots">
