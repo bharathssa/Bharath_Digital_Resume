@@ -43,7 +43,7 @@ export const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="py-20 bg-slate-800/30">
+    <section id="projects" className="py-20 pt-32 bg-slate-800/30 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -75,40 +75,38 @@ export const Projects = () => {
               </div>
 
               <div className="flex space-x-3">
-  <a
-    href={project.link.startsWith("http") ? project.link : "#"}
-    target="_blank"
-    rel="noreferrer"
-    className="flex-1"
-  >
-    <Button
-      size="sm"
-      variant="outline"
-      className="w-full border-blue-400/30 text-blue-400 hover:bg-blue-400/10"
-    >
-      <Github size={16} className="mr-2" />
-      Code
-    </Button>
-  </a>
+                <a
+                  href={project.link.startsWith("http") ? project.link : "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1"
+                >
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="w-full border-blue-400/30 text-blue-400 hover:bg-blue-400/10"
+                  >
+                    <Github size={16} className="mr-2" />
+                    Code
+                  </Button>
+                </a>
 
-  <a
-    href={project.link.startsWith("http") ? project.link : "#"}
-    target="_blank"
-    rel="noreferrer"
-    className="flex-1"
-  >
-    <Button
-      size="sm"
-      variant="outline"
-      className="w-full border-purple-400/30 text-purple-400 hover:bg-purple-400/10"
-    >
-      <ExternalLink size={16} className="mr-2" />
-      Demo
-    </Button>
-  </a>
-</div>
-
-              
+                <a
+                  href={project.link.startsWith("http") ? project.link : "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1"
+                >
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="w-full border-purple-400/30 text-purple-400 hover:bg-purple-400/10"
+                  >
+                    <ExternalLink size={16} className="mr-2" />
+                    Demo
+                  </Button>
+                </a>
+              </div>
             </div>
           ))}
         </div>

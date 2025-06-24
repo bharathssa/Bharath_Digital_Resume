@@ -65,8 +65,8 @@ export const StarField = () => {
     };
 
     const animate = () => {
-      // Very dark background that looks almost black
-      ctx.fillStyle = 'rgba(10, 10, 26, 0.2)';
+      // Much darker background that looks almost black
+      ctx.fillStyle = 'rgba(5, 5, 15, 0.15)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw and animate stars
@@ -157,8 +157,8 @@ export const StarField = () => {
     <>
       <canvas
         ref={canvasRef}
-        className="fixed top-0 left-0 w-screen h-screen z-[-1] pointer-events-none"
-        style={{ background: 'linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #0a0a1a 100%)' }}
+        className="fixed top-0 left-0 w-screen h-screen z-[-2] pointer-events-none"
+        style={{ background: 'linear-gradient(135deg, #050510 0%, #0a0a1a 50%, #050510 100%)' }}
       />
       <div className="moving-spots">
         {createMovingSpots()}
