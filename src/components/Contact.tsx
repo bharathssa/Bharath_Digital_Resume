@@ -13,7 +13,7 @@ export const Contact = () => {
     emailjs
       .sendForm(
         "service_pjcsz18",
-        "template_agvakb5",
+        "template_izi6np7",
         form.current!,
         "JyahNpsxKrJARL14K"
       )
