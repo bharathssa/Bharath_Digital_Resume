@@ -1,10 +1,9 @@
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Text } from '@react-three/drei';
+import { OrbitControls, Html } from '@react-three/drei';
 import { useRef, useMemo, Suspense } from 'react';
 import * as THREE from 'three';
 
 const CoreSphere = () => {
-  const solidRef = useRef<THREE.Mesh>(null);
   const wire1Ref = useRef<THREE.Mesh>(null);
   const wire2Ref = useRef<THREE.Mesh>(null);
   const atmoRef  = useRef<THREE.Mesh>(null);
@@ -27,7 +26,7 @@ const CoreSphere = () => {
 
   return (
     <group>
-      <mesh ref={solidRef}>
+      <mesh>
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial
           color="#04081a"
@@ -53,9 +52,7 @@ const CoreSphere = () => {
   );
 };
 
-const _parentWorldQ = new THREE.Quaternion();
-const _invParentQ   = new THREE.Quaternion();
-
+// Use Html (DOM overlay) for text — guaranteed readable, never mirrored
 const SkillPin = ({
   position,
   text,
@@ -66,64 +63,45 @@ const SkillPin = ({
   color: string;
 }) => {
   const groupRef = useRef<THREE.Group>(null);
-  const textRef  = useRef<THREE.Mesh>(null);
-  const dotRef   = useRef<THREE.Mesh>(null);
-  const haloRef  = useRef<THREE.Mesh>(null);
 
   useFrame(({ camera }) => {
-    // Cull back-hemisphere labels so we never see flipped/clipped text
-    if (groupRef.current) {
-      const worldPos = new THREE.Vector3();
-      groupRef.current.getWorldPosition(worldPos);
-      const facing = worldPos.normalize().dot(camera.position.clone().normalize());
-      groupRef.current.visible = facing > 0.08;
-      if (!groupRef.current.visible) return;
-    }
-
-    // Correct billboard: localQ = parentWorldQ⁻¹ × cameraWorldQ
-    // This cancels the rotating parent's contribution so the mesh faces
-    // the camera in world space, regardless of the SkillsCloud rotation.
-    if (textRef.current?.parent) {
-      textRef.current.parent.getWorldQuaternion(_parentWorldQ);
-      _invParentQ.copy(_parentWorldQ).invert();
-
-      for (const ref of [textRef, dotRef, haloRef]) {
-        if (ref.current) {
-          ref.current.quaternion.copy(camera.quaternion).premultiply(_invParentQ);
-        }
-      }
-    }
+    if (!groupRef.current) return;
+    const worldPos = new THREE.Vector3();
+    groupRef.current.getWorldPosition(worldPos);
+    // Hide labels that face away from the camera
+    const facing = worldPos.normalize().dot(camera.position.clone().normalize());
+    groupRef.current.visible = facing > 0.12;
   });
 
   return (
     <group ref={groupRef} position={position}>
-      <mesh ref={dotRef}>
-        <circleGeometry args={[0.07, 12]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2} />
-      </mesh>
-      <mesh ref={haloRef}>
-        <circleGeometry args={[0.14, 12]} />
-        <meshBasicMaterial color={color} transparent opacity={0.18} />
-      </mesh>
-      <Text
-        ref={textRef}
-        position={[0.22, 0, 0]}
-        fontSize={0.30}
-        color={color}
-        anchorX="left"
-        anchorY="middle"
-        outlineWidth={0.025}
-        outlineColor="#010510"
-      >
-        {text}
-      </Text>
+      <Html distanceFactor={12} style={{ pointerEvents: 'none', userSelect: 'none' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', whiteSpace: 'nowrap' }}>
+          <div style={{
+            width: '7px', height: '7px',
+            borderRadius: '50%',
+            backgroundColor: color,
+            boxShadow: `0 0 7px 2px ${color}88`,
+            flexShrink: 0,
+          }} />
+          <span style={{
+            color,
+            fontSize: '11px',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+            fontWeight: '600',
+            textShadow: '0 1px 6px rgba(0,0,0,0.95), 0 0 2px rgba(0,0,0,1)',
+            letterSpacing: '0.01em',
+          }}>
+            {text}
+          </span>
+        </div>
+      </Html>
     </group>
   );
 };
 
 const SurfaceParticles = () => {
   const ref = useRef<THREE.Points>(null);
-
   const { positions, colors } = useMemo(() => {
     const count = 200;
     const pos = new Float32Array(count * 3);
@@ -147,9 +125,7 @@ const SurfaceParticles = () => {
     return { positions: pos, colors: col };
   }, []);
 
-  useFrame(() => {
-    if (ref.current) ref.current.rotation.y += 0.003;
-  });
+  useFrame(() => { if (ref.current) ref.current.rotation.y += 0.003; });
 
   return (
     <points ref={ref}>
@@ -164,41 +140,37 @@ const SurfaceParticles = () => {
 
 const SkillsCloud = () => {
   const groupRef = useRef<THREE.Group>(null);
-
-  useFrame(() => {
-    if (groupRef.current) groupRef.current.rotation.y += 0.006;
-  });
+  useFrame(() => { if (groupRef.current) groupRef.current.rotation.y += 0.006; });
 
   const skills = useMemo(() => {
     const raw: { text: string; color: string }[] = [
-      { text: 'Python',           color: '#3B82F6' },
-      { text: 'SQL',              color: '#06B6D4' },
-      { text: 'R',                color: '#8B5CF6' },
-      { text: 'Machine Learning', color: '#10B981' },
-      { text: 'XGBoost',          color: '#3B82F6' },
-      { text: 'LightGBM',         color: '#34D399' },
-      { text: 'Random Forest',    color: '#06B6D4' },
-      { text: 'SVM',              color: '#8B5CF6' },
-      { text: 'Sklearn',          color: '#10B981' },
-      { text: 'LangChain',        color: '#A78BFA' },
-      { text: 'RAG',              color: '#F472B6' },
-      { text: 'N8N',              color: '#A78BFA' },
-      { text: 'Azure Databricks', color: '#EF4444' },
-      { text: 'Data Factory',     color: '#EF4444' },
-      { text: 'Snowflake',        color: '#38BDF8' },
-      { text: 'PySpark',          color: '#3B82F6' },
-      { text: 'Airflow',          color: '#34D399' },
-      { text: 'dbt',              color: '#FB923C' },
-      { text: 'Data Lake Gen2',   color: '#06B6D4' },
-      { text: 'Power BI',         color: '#F59E0B' },
-      { text: 'Tableau',          color: '#FBBF24' },
-      { text: 'Pandas',           color: '#F97316' },
-      { text: 'NumPy',            color: '#3B82F6' },
+      { text: 'Python',           color: '#60A5FA' },
+      { text: 'SQL',              color: '#22D3EE' },
+      { text: 'R',                color: '#A78BFA' },
+      { text: 'Machine Learning', color: '#34D399' },
+      { text: 'XGBoost',          color: '#60A5FA' },
+      { text: 'LightGBM',         color: '#6EE7B7' },
+      { text: 'Random Forest',    color: '#22D3EE' },
+      { text: 'SVM',              color: '#A78BFA' },
+      { text: 'Sklearn',          color: '#34D399' },
+      { text: 'LangChain',        color: '#C4B5FD' },
+      { text: 'RAG',              color: '#F9A8D4' },
+      { text: 'N8N',              color: '#C4B5FD' },
+      { text: 'Azure Databricks', color: '#FCA5A5' },
+      { text: 'Data Factory',     color: '#FCA5A5' },
+      { text: 'Snowflake',        color: '#7DD3FC' },
+      { text: 'PySpark',          color: '#60A5FA' },
+      { text: 'Airflow',          color: '#6EE7B7' },
+      { text: 'dbt',              color: '#FDBA74' },
+      { text: 'Data Lake Gen2',   color: '#22D3EE' },
+      { text: 'Power BI',         color: '#FCD34D' },
+      { text: 'Tableau',          color: '#FDE68A' },
+      { text: 'Pandas',           color: '#FB923C' },
+      { text: 'NumPy',            color: '#60A5FA' },
     ];
 
     const goldenRatio = (1 + Math.sqrt(5)) / 2;
     const r = 3.7;
-
     return raw.map((s, i) => {
       const iNorm = (i + 0.5) / raw.length;
       const theta = 2 * Math.PI * i / goldenRatio;
