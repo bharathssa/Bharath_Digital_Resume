@@ -1,113 +1,236 @@
 
-import { ExternalLink, Github } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useRef } from "react";
+import { ExternalLink, Github, Zap, Lock } from "lucide-react";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+
+interface Project {
+  title: string;
+  subtitle: string;
+  description: string;
+  tech: string[];
+  featured?: boolean;
+  liveLink?: string;
+  githubLink?: string;
+  gradient: string;       // CSS gradient string for the card background
+  glowColor: string;      // rgba glow color
+  accentText: string;     // tailwind text color for tech pills
+}
+
+/** The Apple Fitness–style 3D tilt card */
+const ProjectCard = ({ project, index, featured }: { project: Project; index: number; featured?: boolean }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const reveal  = useScrollReveal();
+
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 2;
+    const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 2;
+
+    el.style.transition = "box-shadow 0.15s ease";
+    el.style.transform  = `perspective(900px) rotateY(${x * 13}deg) rotateX(${-y * 13}deg) scale3d(1.04,1.04,1.04)`;
+    el.style.boxShadow  = [
+      `${-x * 32}px ${y * 32}px 64px rgba(0,0,0,0.7)`,
+      `${-x * 10}px ${y * 10}px 20px rgba(0,0,0,0.35)`,
+      `0 0 0 1px rgba(255,255,255,0.08)`,
+    ].join(", ");
+
+    const shimmer = el.querySelector<HTMLElement>("[data-shimmer]");
+    if (shimmer) {
+      const px = (x * 0.5 + 0.5) * 100;
+      const py = (y * 0.5 + 0.5) * 100;
+      shimmer.style.background = `radial-gradient(ellipse at ${px}% ${py}%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.05) 40%, transparent 70%)`;
+      shimmer.style.opacity = "1";
+    }
+  };
+
+  const onMouseLeave = () => {
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.transition = "transform 0.8s cubic-bezier(0.23,1,0.32,1), box-shadow 0.8s cubic-bezier(0.23,1,0.32,1)";
+    el.style.transform  = "";
+    el.style.boxShadow  = "";
+    const shimmer = el.querySelector<HTMLElement>("[data-shimmer]");
+    if (shimmer) { shimmer.style.opacity = "0"; shimmer.style.background = "transparent"; }
+    setTimeout(() => { if (cardRef.current) cardRef.current.style.transition = ""; }, 800);
+  };
+
+  return (
+    <div
+      ref={reveal.ref}
+      className={`reveal ${reveal.visible ? "visible" : ""} ${featured ? "md:col-span-2" : ""}`}
+      style={{ transitionDelay: `${index * 0.07}s` }}
+    >
+      <div
+        ref={cardRef}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        className="relative rounded-3xl overflow-hidden cursor-default h-full"
+        style={{
+          background: project.gradient,
+          willChange: "transform",
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {/* Specular shimmer overlay */}
+        <div data-shimmer className="absolute inset-0 pointer-events-none rounded-3xl opacity-0 transition-opacity duration-200" />
+
+        {/* Noise texture overlay for depth */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.04] rounded-3xl"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          }}
+        />
+
+        {/* Ambient inner glow */}
+        <div
+          className="absolute inset-0 pointer-events-none rounded-3xl"
+          style={{ boxShadow: `inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.3)` }}
+        />
+
+        {/* Featured badge */}
+        {featured && (
+          <div className="absolute top-5 right-5 z-10">
+            <span className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm text-white text-xs font-bold tracking-widest uppercase px-3 py-1.5 rounded-full border border-white/20">
+              <Zap size={10} />Featured
+            </span>
+          </div>
+        )}
+
+        {/* Content */}
+        <div className={`relative z-10 p-7 flex flex-col h-full ${featured ? "md:p-10" : ""}`}>
+          {/* Header */}
+          <div className="mb-4">
+            <p className="text-white/50 text-xs font-semibold tracking-widest uppercase mb-1">{project.subtitle}</p>
+            <h3 className={`font-black text-white leading-tight ${featured ? "text-3xl" : "text-xl"}`}
+              style={{ letterSpacing: "-0.02em", textShadow: "0 1px 20px rgba(0,0,0,0.4)" }}>
+              {project.title}
+            </h3>
+          </div>
+
+          {/* Description */}
+          <p className={`text-white/70 leading-relaxed mb-5 flex-1 ${featured ? "text-base" : "text-sm line-clamp-3"}`}>
+            {project.description}
+          </p>
+
+          {/* Tech pills */}
+          <div className="flex flex-wrap gap-1.5 mb-5">
+            {project.tech.map((t) => (
+              <span key={t} className="text-xs bg-black/25 backdrop-blur-sm text-white/80 border border-white/10 rounded-full px-2.5 py-0.5 font-medium">
+                {t}
+              </span>
+            ))}
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-2 mt-auto">
+            {project.githubLink ? (
+              <a href={project.githubLink} target="_blank" rel="noreferrer"
+                className="flex items-center gap-1.5 bg-black/30 hover:bg-black/50 backdrop-blur-sm text-white/80 hover:text-white text-xs font-semibold px-4 py-2 rounded-full border border-white/10 transition-all duration-200 hover:scale-105">
+                <Github size={13} />Code
+              </a>
+            ) : (
+              <span className="flex items-center gap-1.5 bg-black/20 text-white/30 text-xs font-semibold px-4 py-2 rounded-full border border-white/10">
+                <Lock size={13} />Private
+              </span>
+            )}
+            {project.liveLink ? (
+              <a href={project.liveLink} target="_blank" rel="noreferrer"
+                className="flex items-center gap-1.5 bg-white/15 hover:bg-white/25 backdrop-blur-sm text-white text-xs font-semibold px-4 py-2 rounded-full border border-white/20 transition-all duration-200 hover:scale-105">
+                <ExternalLink size={13} />Live App
+              </a>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const Projects = () => {
-  const projects = [
+  const headingReveal = useScrollReveal();
+
+  const projects: Project[] = [
     {
-      title: "Retirement Planning Simulation App",
-      description: "Developed a Python-based retirement planning simulation app using Monte Carlo techniques and scenario modeling to forecast 35-year financial outcomes, enabling strategic investment in superannuation, foreign equities, and bitcoin; grew project to $3.5M from minimal input through dynamic asset glide path and delivered actionable recommendations on asset allocation, lifestyle upgrades, and drawdown planning.",
-      tech: ["Python", "Monte Carlo", "Financial Modeling", "Streamlit"],
-      link: "https://financialadvisornz.streamlit.app/"
+      title: "AlphaQuest Capital — BTC Signal Dashboard",
+      subtitle: "ML Trading · Featured Project",
+      description: "End-to-end ML pipeline with XGBoost, LightGBM, Random Forest and Gradient Boosting competing to predict daily BTC/ETH price movements. Auto-selects champion model by F1 score and dynamically allocates a simulated $50M portfolio across 4 market regimes.",
+      tech: ["XGBoost", "LightGBM", "Random Forest", "Gradient Boosting", "Python", "F1 Optimisation"],
+      featured: true,
+      liveLink:   "https://alphaquest.streamlit.app/",
+      githubLink: "https://github.com/bharathssa",
+      gradient:   "linear-gradient(135deg, #1a0533 0%, #3b0f6b 40%, #6b21a8 70%, #a855f7 100%)",
+      glowColor:  "rgba(168,85,247,0.4)",
+      accentText: "text-purple-300",
     },
     {
-      title: "Customer Segmentation & Marketing ROI",
-      description: "Developed a logistic regression model and customer segmentation strategy to predict campaign responders and optimize marketing ROI.",
-      tech: ["Python", "Logistic Regression", "Customer Analytics"],
-      link: "#"
+      title: "Monte Carlo Retirement Planner",
+      subtitle: "FinTech · Simulation",
+      description: "35-year financial outcome forecasting across superannuation, equities, and bitcoin. Grew corpus to $3.5M via dynamic asset glide path with actionable drawdown recommendations.",
+      tech: ["Python", "Monte Carlo", "Financial Modelling", "Streamlit"],
+      liveLink:   "https://financialadvisornz.streamlit.app/",
+      githubLink: "https://github.com/bharathssa",
+      gradient:   "linear-gradient(135deg, #052e0f 0%, #065f46 50%, #059669 100%)",
+      glowColor:  "rgba(5,150,105,0.4)",
+      accentText: "text-emerald-300",
     },
     {
-      title: "Expense Tracking App",
-      description: "Developed a Python-based Streamlit app for tracking shared expenses, featuring participant management, multiple split methods (equal, manual, person-specific), real-time balance calculations, editable transaction logs, and PDF export—ideal for trips and shared budgets.",
-      tech: ["Python", "Streamlit", "PDF Export", "Real-time Calculations"],
-      link: "https://github.com/bharathssa/Expense-Tracker-with-Detailed-Transactions/tree/main"
+      title: "Inventory Optimisation & Demand Forecasting",
+      subtitle: "Enterprise · HP Project",
+      description: "Time series analysis across 300K+ SKU-location pairs. Contributed to 8% excess inventory recovery and 15% active customer growth across APJ, EMEA and AMS regions.",
+      tech: ["Time Series", "Azure Databricks", "Python", "Power BI"],
+      gradient:   "linear-gradient(135deg, #0c1445 0%, #1e3a8a 50%, #2563eb 100%)",
+      glowColor:  "rgba(37,99,235,0.4)",
+      accentText: "text-blue-300",
     },
     {
-      title: "Stock Analysis Web Application",
-      description: "Developed a comprehensive stock analysis web application using Python and Streamlit, designed for Indian equity markets. The app integrates real-time data from Google Sheets, computes technical indicators (MACD, RSI, ADX, OBV), and presents dynamic candlestick charts with trend insights. Implemented fundamental analysis and NLP-based sentiment scoring from live news headlines to deliver buy/hold/sell signals, empowering users to make informed investment decisions through an intuitive dashboard.",
-      tech: ["Python", "Streamlit", "Technical Analysis", "NLP", "Sentiment Analysis"],
-      link: "https://github.com/bharathssa/Comprehensive-Indian-Stock-Analyzer"
+      title: "BTC/ETH Stock Analysis Dashboard",
+      subtitle: "FinTech · NLP",
+      description: "Real-time technical indicators (MACD, RSI, ADX, OBV) with NLP-based sentiment scoring from live news headlines delivering buy/hold/sell signals.",
+      tech: ["Python", "Streamlit", "NLP", "Sentiment Analysis", "Technical Analysis"],
+      githubLink: "https://github.com/bharathssa/Comprehensive-Indian-Stock-Analyzer",
+      gradient:   "linear-gradient(135deg, #1a1200 0%, #78350f 50%, #d97706 100%)",
+      glowColor:  "rgba(217,119,6,0.4)",
+      accentText: "text-amber-300",
     },
     {
-      title: "Inventory Optimization & Demand Forecasting",
-      description: "Developed predictive analytics models improving forecasting accuracy.",
-      tech: ["Time Series Analysis", "Python", "Forecasting"],
-      link: "#"
+      title: "Cable Approval Validation (AI/ML)",
+      subtitle: "Manufacturing · Classification",
+      description: "ML pipeline extracting 300+ legacy PDF records via tabula-py, training 5 classifiers to predict wire harness pass/fail — cutting test requirements from 30–40 checks to 5–6.",
+      tech: ["Decision Tree", "Random Forest", "SVM", "tabula-py", "Python"],
+      gradient:   "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
+      glowColor:  "rgba(100,116,139,0.4)",
+      accentText: "text-slate-300",
     },
     {
-      title: "Cable Test Validation using AI",
-      description: "Implemented ML models reducing testing time and R&D costs.",
-      tech: ["Machine Learning", "Python", "Classification"],
-      link: "#"
-    }
+      title: "Shared Expense Tracker",
+      subtitle: "Utility App · Streamlit",
+      description: "Participant management, multiple split methods (equal, manual, person-specific), real-time balance calculations and PDF export — ideal for group trips and shared budgets.",
+      tech: ["Python", "Streamlit", "PDF Export", "Real-time"],
+      githubLink: "https://github.com/bharathssa/Expense-Tracker-with-Detailed-Transactions",
+      gradient:   "linear-gradient(135deg, #0c1e14 0%, #14532d 50%, #16a34a 100%)",
+      glowColor:  "rgba(22,163,74,0.4)",
+      accentText: "text-green-300",
+    },
   ];
 
   return (
-    <section id="projects" className="py-20 pt-32 bg-slate-800/30 relative z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+    <section id="projects" className="py-32 relative">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+
+      <div className="max-w-6xl mx-auto px-6">
+        <div ref={headingReveal.ref} className={`reveal text-center mb-16 ${headingReveal.visible ? "visible" : ""}`}>
+          <p className="text-[#0a84ff] text-sm font-semibold tracking-[0.2em] uppercase mb-3">Portfolio</p>
+          <h2 className="font-black text-gradient-hero" style={{ fontSize: "clamp(2.4rem, 5vw, 4rem)", letterSpacing: "-0.03em" }}>
             Technical Projects
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full"></div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <div key={index} className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg p-6 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 group">
-              <h3 className="text-xl font-semibold text-blue-400 mb-3 group-hover:text-blue-300 transition-colors duration-300">
-                {project.title}
-              </h3>
-              
-              <p className="text-gray-300 text-sm leading-relaxed mb-4 line-clamp-4">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tech.map((tech, techIndex) => (
-                  <span
-                    key={techIndex}
-                    className="px-2 py-1 text-xs bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-gray-300 rounded border border-purple-400/30"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex space-x-3">
-                <a
-                  href={project.link.startsWith("http") ? project.link : "#"}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex-1"
-                >
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="w-full border-blue-400/30 text-blue-400 hover:bg-blue-400/10"
-                  >
-                    <Github size={16} className="mr-2" />
-                    Code
-                  </Button>
-                </a>
-
-                <a
-                  href={project.link.startsWith("http") ? project.link : "#"}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex-1"
-                >
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="w-full border-purple-400/30 text-purple-400 hover:bg-purple-400/10"
-                  >
-                    <ExternalLink size={16} className="mr-2" />
-                    Demo
-                  </Button>
-                </a>
-              </div>
-            </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {projects.map((p, i) => (
+            <ProjectCard key={p.title} project={p} index={i} featured={p.featured} />
           ))}
         </div>
       </div>

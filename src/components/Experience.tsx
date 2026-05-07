@@ -1,130 +1,256 @@
 
-import { Calendar, MapPin } from "lucide-react";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import { useTilt } from "@/hooks/use-tilt";
+
+interface Exp {
+  title: string;
+  company: string;
+  location: string;
+  period: string;
+  tag: string;
+  tagColor: string;
+  accent: string;
+  accentGlow: string;
+  dotColor: string;
+  context?: string;
+  chips: string[];
+  bullets: string[];
+}
+
+const ExperienceCard = ({ exp, isLeft }: { exp: Exp; isLeft: boolean }) => {
+  const { ref, onMouseMove, onMouseLeave } = useTilt(6);
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      className="tilt-card glass rounded-2xl overflow-hidden relative group"
+    >
+      {/* Shimmer */}
+      <div data-shimmer className="absolute inset-0 rounded-2xl opacity-0 pointer-events-none transition-opacity duration-300" />
+
+      {/* Accent bar — faces the spine */}
+      <div
+        className={`absolute top-0 bottom-0 w-[3px] bg-gradient-to-b ${exp.accent} opacity-60 group-hover:opacity-100 transition-opacity duration-300 ${isLeft ? "right-0" : "left-0"}`}
+      />
+
+      {/* Glow halo */}
+      <div
+        className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at ${isLeft ? "100%" : "0%"} 50%, ${exp.accentGlow} 0%, transparent 65%)`,
+        }}
+      />
+
+      <div className="relative z-10 px-6 py-6">
+        {/* Tag + period */}
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <span className={`text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full border ${exp.tagColor}`}>
+            {exp.tag}
+          </span>
+          <span className="text-[#636366] text-xs">{exp.period}</span>
+        </div>
+
+        {/* Title */}
+        <h3 className="text-lg font-bold text-[#f5f5f7] leading-tight mb-0.5">{exp.title}</h3>
+        <p className="text-[#0a84ff] text-sm font-semibold mb-0.5">{exp.company}</p>
+        <p className="text-[#636366] text-xs mb-3">{exp.location}</p>
+
+        {/* Context */}
+        {exp.context && (
+          <p className="text-[#636366] text-xs italic mb-3 leading-relaxed border-l-2 border-white/10 pl-3">{exp.context}</p>
+        )}
+
+        {/* Achievement chips */}
+        {exp.chips.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {exp.chips.map((c) => (
+              <span key={c} className="text-[10px] glass px-2 py-0.5 rounded-full text-cyan-300/80">
+                {c}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Bullets */}
+        <ul className="space-y-1.5">
+          {exp.bullets.map((b, i) => (
+            <li key={i} className="flex items-start gap-2 text-[#86868b] text-xs leading-relaxed">
+              <span className="text-[#0a84ff] mt-1 shrink-0">▸</span>
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
 
 export const Experience = () => {
-  const experiences = [
+  const headingReveal = useScrollReveal();
+
+  const experiences: Exp[] = [
     {
       title: "Team Member – Customer Operations",
       company: "Woolworths New Zealand",
       location: "Auckland, NZ",
       period: "Apr 2025 – Present",
-      description: [
-        "Provided customer-focused support across store operations, including stock management and direct customer interaction.",
-        "Supported daily operations across multiple store zones-checkout, produce, and online fulfillment-ensuring an average 98% accuracy rate in stock display, order picking, and shelf replenishment.",
-        "Fulfilled up to 50+ online orders per shift with attention to quality, contributing to positive customer satisfaction metrics and on-time delivery performance.",
-        "Provided direct assistance to 100+ customers weekly by locating products, answering queries, and offering a seamless shopping journey, reflecting Woolworths' brand of friendly service.",
-        "Maintained compliance with safety protocols and store procedures, reducing risk incidents and ensuring a secure and hygienic retail environment."
-      ]
+      tag: "Local NZ Experience",
+      tagColor: "text-green-400 border-green-400/30",
+      accent: "from-green-400 to-emerald-500",
+      accentGlow: "rgba(52,211,153,0.12)",
+      dotColor: "#34d399",
+      chips: [],
+      bullets: [
+        "Gaining local NZ work experience in customer operations, stock management and team coordination.",
+        "Supporting daily store operations with 98%+ accuracy across checkout, produce and online fulfilment.",
+        "Fulfilled 50+ online orders per shift, contributing to positive customer satisfaction metrics.",
+      ],
     },
     {
       title: "Data Engineer",
       company: "Hewlett-Packard",
       location: "Bangalore, India",
       period: "Jun 2022 – Mar 2025",
-      description: [
-        "Invented Optimization and Demand Forecast Prediction using Time Series Analysis.",
-        "Detailed study of excess inventory pattern, Customer Activity Status and Fill rate across regions for 24 months and which helped graphics printing business to recover 8% of excess inventory, increase in 15% of active customer across APJ, EMEA and AMS clients.",
-        "Deployed 15 distinct Power BI dashboard using various SQL's and understanding logistics to improve HP readability.",
-        "Led and facilitated the end-to-end 'GoldenEye Project' as a SuperUser, actively engaging in time series analysis to predict Demand Forecast."
-      ]
+      tag: "Core Data Engineering",
+      tagColor: "text-cyan-400 border-cyan-400/30",
+      accent: "from-cyan-400 to-blue-500",
+      accentGlow: "rgba(10,132,255,0.14)",
+      dotColor: "#0a84ff",
+      context: "Enterprise Data Platform — Scalable Pipelines, AI-Enabled Analytics & Self-Service BI across AME, APJ and EMEA",
+      chips: ["300K+ SKUs", "15+ Dashboards", "3 Global Regions"],
+      bullets: [
+        "Designed automated data pipelines from SAP, ERP and legacy systems into Data Lake Gen2, Databricks and Data Factory across 300K+ global SKU-location pairs.",
+        "Prepared AI-ready data assets for forecasting models — cleansing 12–24 months demand data for near real-time inventory insights across three regions.",
+        "Developed 15+ Power BI dashboards and semantic models covering fill rate, demand trends, SKU forecasts and excess inventory.",
+        "Implemented data governance frameworks: validation rules, reconciliation checks, exception logging and audit trails.",
+      ],
     },
     {
-      title: "Engineer -Product",
+      title: "Engineer – Product",
       company: "Molex India Pvt. Ltd",
       location: "Bangalore, India",
       period: "Aug 2020 – May 2022",
-      description: [
-        "Cable Approval Validation: Predict the passing criteria of cable approval by cross sectioning test results using a machine learning algorithm",
-        "Retrieved Data from old test reports from PDFs by converting them to tabula-py and stored them in pandas dataframe using CSV format.",
-        "Missing values were effectively handled using mathematical functions and interpolation techniques, incorporating domain expertise.",
-        "Executed a comprehensive range of classification algorithms, encompassing Decision Trees, Random Forest, K-Nearest Neighbors (KNN), Naive Bayes, and Support Vector Machines (SVM), to address diverse classification challenges."
-      ]
+      tag: "AI / ML Engineering",
+      tagColor: "text-purple-400 border-purple-400/30",
+      accent: "from-purple-400 to-pink-500",
+      accentGlow: "rgba(191,90,242,0.12)",
+      dotColor: "#bf5af2",
+      context: "Cable Approval Validation — AI-enabled pass/fail prediction pipeline for wire harness certification",
+      chips: ["28% R&D Saving", "3 hrs/day saved", "300+ PDFs"],
+      bullets: [
+        "Built end-to-end data acquisition pipeline extracting records from 300+ legacy PDFs using tabula-py, engineering an ML-ready dataset from 30–40 test dimensions.",
+        "Developed classification solution (Decision Tree, Random Forest, KNN, SVM) reducing test requirements from 30–40 to 5–6 checks.",
+        "Delivered 28% R&D expenditure reduction and saved engineers ~3 hours per day through data-driven certification decisions.",
+      ],
     },
     {
-      title: "Assistant Engineer",
+      title: "Data Analyst",
       company: "TUV Rheinland India Pvt. Ltd",
       location: "Bangalore, India",
       period: "Dec 2018 – Jul 2020",
-      description: [
-        "Visualizing KPI and Business Concepts in Power BI:",
-        "Proficient in Data Reporting and Data Visualization through Power BI, extracting meaningful insights from datalake using SQL.",
-        "Developed and maintained robust Data Pipelines and ETL processes using SQL and SSMS for streamlined data management."
-      ]
+      tag: "BI & Analytics",
+      tagColor: "text-blue-400 border-blue-400/30",
+      accent: "from-blue-400 to-indigo-500",
+      accentGlow: "rgba(99,102,241,0.12)",
+      dotColor: "#6366f1",
+      context: "KPI Reporting & BI — Operational Dashboards for Electronics Device Certification",
+      chips: ["~20% cycle time cut", "~15% QoQ improvement", "8+ Dashboards"],
+      bullets: [
+        "Designed 8+ Power BI dashboards surfacing certification bottlenecks, reducing average cycle time by ~20%.",
+        "Identified high-failure test categories via SQL trend analysis, reducing repeat-test incidents by ~15% QoQ.",
+        "Produced monthly compliance and revenue reports supporting strategic capacity planning.",
+      ],
     },
-    {
-      title: "Junior Engineer",
-      company: "SKC Environ Lab Pvt. Ltd",
-      location: "Bangalore, India",
-      period: "Sep 2017 – Nov 2019",
-      description: [
-        "Pioneered the design and analysis of various tests using Catia V5, while also preparing comprehensive test reports by collecting and validating measured data and results."
-      ]
-    }
   ];
 
   return (
-    <section id="experience" className="py-20 bg-slate-800/30 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+    <section id="experience" className="py-32 relative">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+
+      <div className="max-w-6xl mx-auto px-6">
+
+        {/* Heading */}
+        <div ref={headingReveal.ref} className={`reveal text-center mb-20 ${headingReveal.visible ? "visible" : ""}`}>
+          <p className="text-[#0a84ff] text-sm font-semibold tracking-[0.2em] uppercase mb-3">Timeline</p>
+          <h2 className="font-black text-gradient-hero" style={{ fontSize: "clamp(2.4rem, 5vw, 4rem)", letterSpacing: "-0.03em" }}>
             Career Journey
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full"></div>
         </div>
 
+        {/* ── Tree ── */}
         <div className="relative">
-          {/* Central vertical line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-400 via-purple-400 to-blue-400 h-full rounded-full opacity-60"></div>
+
+          {/* Central spine — full height, desktop only */}
+          <div
+            className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px hidden md:block"
+            style={{
+              background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.12) 6%, rgba(255,255,255,0.12) 94%, transparent)",
+            }}
+          />
 
           <div className="space-y-16">
             {experiences.map((exp, index) => (
-              <div key={index} className={`relative flex items-center ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
-                {/* Timeline dot */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full border-4 border-slate-900 z-10 shadow-lg"></div>
-                
-                {/* Experience card */}
-                <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
-                  <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-lg p-6 hover:bg-slate-700/60 transition-all duration-300 hover:scale-105 shadow-xl">
-                    {/* Date indicator */}
-                    <div className={`absolute top-4 ${index % 2 === 0 ? '-right-2' : '-left-2'} w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse`}></div>
-                    
-                    <div className="flex flex-col mb-4">
-                      <h3 className="text-xl font-semibold text-blue-400 mb-2">
-                        {exp.title}
-                      </h3>
-                      <div className="flex items-center text-gray-400 text-sm mb-2">
-                        <Calendar size={16} className="mr-2" />
-                        {exp.period}
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center text-purple-400 font-medium mb-2">
-                      <span className="mr-4">{exp.company}</span>
-                      <div className="flex items-center text-gray-400 text-sm">
-                        <MapPin size={16} className="mr-1" />
-                        {exp.location}
-                      </div>
-                    </div>
-
-                    <ul className="list-disc list-inside space-y-2 text-gray-300 mt-4">
-                      {exp.description.slice(0, 3).map((item, itemIndex) => (
-                        <li key={itemIndex} className="leading-relaxed text-sm">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    {/* Progress indicator */}
-                    <div className="mt-4 flex justify-center">
-                      <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <TreeRow key={exp.company} exp={exp} index={index} isLeft={index % 2 === 0} />
             ))}
           </div>
         </div>
       </div>
     </section>
+  );
+};
+
+/** Separate component so each row gets its own scroll-reveal hook */
+const TreeRow = ({ exp, index, isLeft }: { exp: Exp; index: number; isLeft: boolean }) => {
+  const reveal = useScrollReveal(0.08);
+
+  return (
+    <div
+      ref={reveal.ref}
+      className={`reveal ${isLeft ? "reveal-left" : "reveal-right"} ${reveal.visible ? "visible" : ""}`}
+      style={{ transitionDelay: `${index * 0.1}s` }}
+    >
+      {/* ── Desktop: original alternating tree ── */}
+      {/* Matches original: relative flex items-center justify-start/justify-end */}
+      <div
+        className={`relative hidden md:flex items-center ${isLeft ? "justify-start" : "justify-end"}`}
+      >
+        {/* Central spine dot — absolute inside the relative flex row */}
+        <div className="absolute left-1/2 -translate-x-1/2 z-20">
+          <div
+            className="w-5 h-5 rounded-full border-2 border-[#060608]"
+            style={{
+              background: exp.dotColor,
+              boxShadow: `0 0 12px ${exp.dotColor}, 0 0 28px ${exp.dotColor}66`,
+            }}
+          />
+        </div>
+
+        {/* Card — w-5/12, padded away from the spine */}
+        <div className={`w-5/12 relative ${isLeft ? "pr-10" : "pl-10"}`}>
+          {/* Small connector dot on the card edge toward the spine */}
+          <div
+            className={`absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full z-10 ${isLeft ? "-right-2" : "-left-2"}`}
+            style={{ background: exp.dotColor, boxShadow: `0 0 6px ${exp.dotColor}` }}
+          />
+          <ExperienceCard exp={exp} isLeft={isLeft} />
+        </div>
+      </div>
+
+      {/* ── Mobile: single column with left dot ── */}
+      <div className="md:hidden flex items-start gap-4">
+        <div className="flex flex-col items-center pt-4">
+          <div
+            className="w-3 h-3 rounded-full shrink-0"
+            style={{ background: exp.dotColor, boxShadow: `0 0 8px ${exp.dotColor}` }}
+          />
+          <div className="w-px flex-1 mt-2" style={{ background: `${exp.dotColor}44` }} />
+        </div>
+        <div className="flex-1 pb-6">
+          <ExperienceCard exp={exp} isLeft={true} />
+        </div>
+      </div>
+    </div>
   );
 };

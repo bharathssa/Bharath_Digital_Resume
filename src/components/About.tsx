@@ -1,96 +1,132 @@
 
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import { useTilt } from "@/hooks/use-tilt";
+
+const MetricCard = ({ value, label, sublabel, delay }: {
+  value: string; label: string; sublabel: string; delay: string;
+}) => {
+  const { ref, onMouseMove, onMouseLeave } = useTilt(10);
+  const reveal = useScrollReveal();
+
+  return (
+    <div ref={reveal.ref} className={`reveal ${reveal.visible ? "visible" : ""}`} style={{ transitionDelay: delay }}>
+      <div
+        ref={ref}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        className="tilt-card glass rounded-2xl p-6 text-center relative overflow-hidden group cursor-default"
+      >
+        <div data-shimmer className="absolute inset-0 rounded-2xl opacity-0 pointer-events-none transition-opacity duration-300" />
+        <div className="text-3xl font-black text-gradient-blue mb-1 group-hover:scale-105 transition-transform duration-300">
+          {value}
+        </div>
+        <div className="text-[#f5f5f7] text-sm font-semibold mb-0.5">{label}</div>
+        <div className="text-[#636366] text-xs">{sublabel}</div>
+      </div>
+    </div>
+  );
+};
+
+const RoleCard = ({ icon, title, desc, gradient, delay }: {
+  icon: string; title: string; desc: string; gradient: string; delay: string;
+}) => {
+  const { ref, onMouseMove, onMouseLeave } = useTilt(12);
+  const reveal = useScrollReveal();
+
+  return (
+    <div ref={reveal.ref} className={`reveal ${reveal.visible ? "visible" : ""}`} style={{ transitionDelay: delay }}>
+      <div
+        ref={ref}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        className="tilt-card glass rounded-2xl p-6 relative overflow-hidden group h-full cursor-default"
+      >
+        {/* Gradient edge highlight on hover */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-[0.08] transition-opacity duration-500 rounded-2xl`} />
+        <div data-shimmer className="absolute inset-0 rounded-2xl opacity-0 pointer-events-none transition-opacity duration-300" />
+
+        <div className="relative z-10">
+          <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300 inline-block">
+            {icon}
+          </div>
+          <h3 className={`font-bold text-base mb-2 bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
+            {title}
+          </h3>
+          <p className="text-[#86868b] text-sm leading-relaxed">{desc}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const About = () => {
-  console.log("About component rendered");
+  const headingReveal = useScrollReveal();
+
+  const metrics = [
+    { value: "300K+", label: "SKU-Location Pairs",  sublabel: "Managed at HP",          delay: "0s"    },
+    { value: "15+",   label: "Power BI Dashboards", sublabel: "Deployed globally",       delay: "0.08s" },
+    { value: "28%",   label: "R&D Cost Reduction",  sublabel: "Delivered at Molex",      delay: "0.16s" },
+    { value: "20%",   label: "Cycle Time Cut",       sublabel: "TUV Rheinland",           delay: "0.24s" },
+  ];
 
   const roles = [
-     {
-      title: "Data Engineer/Analyst",
-      icon: "📊",
-      description: "Transforming data into actionable insights",
-      gradient: "from-pink-500 to-orange-500"
-    },
-    {
-      title: "Machine Learning Engineer",
-      icon: "🤖",
-      description: "Building intelligent systems with AI",
-      gradient: "from-blue-500 to-purple-500"
-    },
-    
-    {
-      title: "Data Scientist",
-      icon: "🔬",
-      description: "Extracting knowledge from complex datasets",
-      gradient: "from-purple-500 to-pink-500"
-    },
-    {
-      title: "Data Visualization Expert",
-      icon: "📈",
-      description: "Creating compelling visual narratives from data",
-      gradient: "from-teal-500 to-cyan-500"
-    }
-   
+    { icon: "⚡", title: "Microsoft Fabric Engineer",  gradient: "from-blue-400 to-cyan-400",    desc: "DP-700 Certified · Scalable pipelines, data governance & Azure ecosystem delivery",                    delay: "0s"    },
+    { icon: "🤖", title: "AI & LLM Engineering",       gradient: "from-purple-400 to-pink-400",  desc: "LangChain, RAG, N8N orchestration — production-grade AI data workflows",                              delay: "0.1s"  },
+    { icon: "📊", title: "BI & Data Visualisation",    gradient: "from-teal-400 to-cyan-400",    desc: "15+ Power BI dashboards enabling self-service analytics for global stakeholders",                      delay: "0.2s"  },
+    { icon: "🔬", title: "ML & Predictive Analytics",  gradient: "from-orange-400 to-pink-400",  desc: "End-to-end ML pipelines from raw data acquisition to model deployment",                               delay: "0.3s"  },
   ];
 
   return (
-    <section id="about" className="py-20 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <div className="mb-4">
-            <span className="text-cyan-400 text-lg font-medium tracking-wide uppercase">Introduction</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+    <section id="about" className="py-32 relative">
+      {/* Subtle section separator */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+
+      <div className="max-w-6xl mx-auto px-6">
+
+        {/* Heading */}
+        <div
+          ref={headingReveal.ref}
+          className={`reveal text-center mb-16 ${headingReveal.visible ? "visible" : ""}`}
+        >
+          <p className="text-[#0a84ff] text-sm font-semibold tracking-[0.2em] uppercase mb-3">Introduction</p>
+          <h2 className="font-black text-gradient-hero mb-6" style={{ fontSize: "clamp(2.4rem, 5vw, 4rem)", letterSpacing: "-0.03em" }}>
             Overview.
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-400 mx-auto rounded-full"></div>
-        </div>
-
-        <div className="mb-16">
-          <p className="text-lg text-gray-300 leading-relaxed max-w-4xl mx-auto text-center">
-            Highly skilled Data Engineer with 6+ years of expertise in Machine Learning, Model Deployment, Data pipelines, Data Analytics, Data
-Visualization. A passionate AI enthusiast focused on Deep Learning and Time Series Analysis, dedicated to driving impactful solutions through
-cutting-edge technologies. Additionally, I have hands-on experience with Azure services, AWS services, Apache Spark, SAP, and Snowflake.
+          <p className="text-[#86868b] text-lg max-w-3xl mx-auto leading-relaxed">
+            <span className="text-[#f5f5f7] font-semibold">Microsoft Certified Fabric Data Engineer (DP-700)</span> with 6+ years of experience
+            designing{" "}<span className="text-blue-400">scalable data pipelines</span>,{" "}
+            <span className="text-purple-400">AI-enabled analytics</span>, and{" "}
+            <span className="text-cyan-400">self-service BI solutions</span>{" "}
+            across global enterprise environments. Currently completing a{" "}
+            <span className="text-blue-400 font-medium">Master of Business Analytics (FinTech)</span> at the University of Auckland.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {roles.map((role, index) => (
-            <div 
-              key={index}
-              className="group relative bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 hover:bg-slate-700/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer"
-              style={{
-                animationDelay: `${index * 0.1}s`
-              }}
-            >
-              {/* Gradient border effect */}
-              <div className={`absolute inset-0 bg-gradient-to-r ${role.gradient} rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500`}></div>
-              
-              {/* Content */}
-              <div className="relative z-10">
-                <div className="text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                  {role.icon}
-                </div>
-                <h3 className={`text-xl font-semibold mb-3 bg-gradient-to-r ${role.gradient} bg-clip-text text-transparent`}>
-                  {role.title}
-                </h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  {role.description}
-                </p>
-              </div>
-
-              {/* Animated background pattern */}
-              <div className="absolute top-0 right-0 w-20 h-20 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
-                <div className="w-full h-full bg-gradient-to-br from-white to-transparent rounded-full animate-pulse"></div>
-              </div>
-            </div>
+        {/* Metrics */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+          {metrics.map((m) => (
+            <MetricCard key={m.label} {...m} />
           ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <div className="inline-flex items-center space-x-2 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-full px-6 py-3">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-gray-300">Available for new opportunities</span>
+        {/* Role cards */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+          {roles.map((r) => (
+            <RoleCard key={r.title} {...r} />
+          ))}
+        </div>
+
+        {/* Available badge */}
+        <div className="flex justify-center">
+          <div className="inline-flex items-center gap-3 glass rounded-full px-6 py-3">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
+            </span>
+            <span className="text-[#86868b] text-sm">Available for Data Engineering &amp; Analytics opportunities in New Zealand</span>
           </div>
         </div>
+
       </div>
     </section>
   );

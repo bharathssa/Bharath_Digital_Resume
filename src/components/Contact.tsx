@@ -77,7 +77,7 @@ export const Contact = () => {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-blue-400">Location</h3>
-                <p className="text-gray-300">16 Gore Street, Auckland Central, Auckland, New Zealand</p>
+                <p className="text-gray-300">Flat Bush, Auckland, New Zealand</p>
               </div>
             </div>
 
