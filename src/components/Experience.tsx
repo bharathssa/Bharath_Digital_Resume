@@ -182,15 +182,15 @@ export const Experience = () => {
         {/* ── Tree ── */}
         <div className="relative">
 
-          {/* Central spine */}
+          {/* Central spine — full height, desktop only */}
           <div
-            className="absolute left-1/2 -translate-x-1/2 top-4 bottom-4 w-px hidden md:block"
+            className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px hidden md:block"
             style={{
               background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.12) 6%, rgba(255,255,255,0.12) 94%, transparent)",
             }}
           />
 
-          <div className="space-y-14">
+          <div className="space-y-16">
             {experiences.map((exp, index) => (
               <TreeRow key={exp.company} exp={exp} index={index} isLeft={index % 2 === 0} />
             ))}
@@ -211,41 +211,34 @@ const TreeRow = ({ exp, index, isLeft }: { exp: Exp; index: number; isLeft: bool
       className={`reveal ${isLeft ? "reveal-left" : "reveal-right"} ${reveal.visible ? "visible" : ""}`}
       style={{ transitionDelay: `${index * 0.1}s` }}
     >
-      {/* Desktop: alternating tree */}
-      <div className={`hidden md:flex items-center ${isLeft ? "justify-start" : "justify-end"}`}>
-        <div className={`w-5/12 relative ${isLeft ? "pr-8" : "pl-8"}`}>
-
-          {/* Small connector dot on the card edge toward the spine */}
-          <div
-            className={`absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full ${isLeft ? "-right-[calc(1rem-1px)]" : "-left-[calc(1rem-1px)]"} z-10`}
-            style={{
-              background: exp.dotColor,
-              boxShadow: `0 0 8px ${exp.dotColor}`,
-            }}
-          />
-
-          {/* Connector line from card edge to spine */}
-          <div
-            className={`absolute top-1/2 -translate-y-1/2 h-px w-6 ${isLeft ? "right-0 translate-x-full" : "left-0 -translate-x-full"}`}
-            style={{ background: `linear-gradient(to ${isLeft ? "right" : "left"}, transparent, ${exp.dotColor}88)` }}
-          />
-
-          <ExperienceCard exp={exp} isLeft={isLeft} />
-        </div>
-
-        {/* Central dot */}
+      {/* ── Desktop: original alternating tree ── */}
+      {/* Matches original: relative flex items-center justify-start/justify-end */}
+      <div
+        className={`relative hidden md:flex items-center ${isLeft ? "justify-start" : "justify-end"}`}
+      >
+        {/* Central spine dot — absolute inside the relative flex row */}
         <div className="absolute left-1/2 -translate-x-1/2 z-20">
           <div
-            className="w-4 h-4 rounded-full border-2 border-[#060608]"
+            className="w-5 h-5 rounded-full border-2 border-[#060608]"
             style={{
               background: exp.dotColor,
               boxShadow: `0 0 12px ${exp.dotColor}, 0 0 28px ${exp.dotColor}66`,
             }}
           />
         </div>
+
+        {/* Card — w-5/12, padded away from the spine */}
+        <div className={`w-5/12 relative ${isLeft ? "pr-10" : "pl-10"}`}>
+          {/* Small connector dot on the card edge toward the spine */}
+          <div
+            className={`absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full z-10 ${isLeft ? "-right-2" : "-left-2"}`}
+            style={{ background: exp.dotColor, boxShadow: `0 0 6px ${exp.dotColor}` }}
+          />
+          <ExperienceCard exp={exp} isLeft={isLeft} />
+        </div>
       </div>
 
-      {/* Mobile: full-width single column with left dot */}
+      {/* ── Mobile: single column with left dot ── */}
       <div className="md:hidden flex items-start gap-4">
         <div className="flex flex-col items-center pt-4">
           <div
