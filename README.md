@@ -3,7 +3,7 @@
 Welcome to my interactive portfolio website – a modern, 3D-enabled digital resume built with React, Three.js (via `@react-three/fiber`), TailwindCSS, and TypeScript. It showcases my professional journey, technical expertise, and projects with a clean UI and engaging visual experience.
 
 ## 🚀 Live Preview
-👉 [Visit bharathchandran.tech](https://bharathchandran.tech) 
+👉 [Visit bharathchandran.tech](https://bharathssa.github.io/Bharath_Digital_Resume/) 
 
 ---
 

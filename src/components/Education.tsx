@@ -36,7 +36,7 @@ export const Education = () => {
   ];
 
   return (
-    <section id="education" className="py-20">
+    <section id="education" className="py-20 pt-32 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">

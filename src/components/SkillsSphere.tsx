@@ -31,7 +31,7 @@ const SkillsText = ({ position, text, color }: { position: [number, number, numb
 
 const RotatingGlobe = () => {
   const globeRef = useRef<THREE.Mesh>(null);
-  const texture = useLoader(TextureLoader, "/textures/globe.png");
+  const texture = useLoader(TextureLoader, "globe.png");
 
   useFrame(() => {
     if (globeRef.current) {

@@ -4,14 +4,15 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: "/Bharath_Digital_Resume/", // 👈 Add this line
+  base: "/Bharath_Digital_Resume/", // ✅ CRUCIAL for GitHub Pages
+
   server: {
     host: "::",
     port: 8080,
   },
   plugins: [
     react(),
-    mode === 'development' && componentTagger(),
+    mode === "development" && componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {

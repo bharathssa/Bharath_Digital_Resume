@@ -87,7 +87,7 @@ const NestedSphereSystem = () => {
   const innerGroupRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const orbitingSpheresRef = useRef<THREE.Group>(null);
-  const contactTexture = useLoader(TextureLoader, '/contact_globe.png');
+  const contactTexture = useLoader(TextureLoader,'contact_globe.png');
 
   useFrame(() => {
     // ✅ zoom effect on outer big sphere only
