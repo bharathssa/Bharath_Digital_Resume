@@ -62,6 +62,19 @@
   }
 }
 
+/* ─── Tech marquee ─── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.tech-marquee {
+  animation: marquee 28s linear infinite;
+  width: max-content;
+}
+.tech-marquee:hover {
+  animation-play-state: paused;
+}
+
 /* ─── Apple Design Utilities ─── */
 @layer utilities {
 

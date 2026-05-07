@@ -2,6 +2,14 @@
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { useTilt } from "@/hooks/use-tilt";
 import { SkillsSphere } from "./SkillsSphere";
+import {
+  SiPython, SiR, SiDatabricks, SiSnowflake,
+  SiApacheairflow, SiPandas, SiNumpy, SiScikitlearn,
+  SiJupyter, SiDbt, SiApachespark, SiDocker,
+  SiMysql, SiLangchain, SiN8N,
+} from "react-icons/si";
+import { TbBrandAzure } from "react-icons/tb";
+import type { IconType } from "react-icons";
 
 interface Category {
   icon: string;
@@ -10,6 +18,67 @@ interface Category {
   borderGlow: string;
   skills: string[];
 }
+
+interface TechIcon {
+  icon: IconType;
+  name: string;
+  color: string;
+}
+
+const techStack: TechIcon[] = [
+  { icon: SiPython,        name: "Python",       color: "#3776AB" },
+  { icon: TbBrandAzure,    name: "Azure",         color: "#0078D4" },
+  { icon: SiDatabricks,    name: "Databricks",    color: "#FF3621" },
+  { icon: SiSnowflake,     name: "Snowflake",     color: "#29B5E8" },
+  { icon: SiApachespark,   name: "PySpark",       color: "#E25A1C" },
+  { icon: SiApacheairflow, name: "Airflow",       color: "#017CEE" },
+  { icon: SiDbt,           name: "dbt",           color: "#FF694B" },
+  { icon: SiPandas,        name: "Pandas",        color: "#6C4CC1" },
+  { icon: SiNumpy,         name: "NumPy",         color: "#4DABCF" },
+  { icon: SiScikitlearn,   name: "Scikit-learn",  color: "#F7931E" },
+  { icon: SiLangchain,     name: "LangChain",     color: "#1C3D5A" },
+  { icon: SiN8N,           name: "N8N",           color: "#EA4B71" },
+  { icon: SiJupyter,       name: "Jupyter",       color: "#F37626" },
+  { icon: SiMysql,         name: "SQL",           color: "#4479A1" },
+  { icon: SiR,             name: "R",             color: "#276DC3" },
+  { icon: SiDocker,        name: "Docker",        color: "#2496ED" },
+];
+
+const TechIconStrip = () => (
+  <div className="relative overflow-hidden mb-14 py-2">
+    {/* Fade edges */}
+    <div className="absolute left-0 top-0 h-full w-16 z-10 pointer-events-none"
+      style={{ background: "linear-gradient(to right, #060608, transparent)" }} />
+    <div className="absolute right-0 top-0 h-full w-16 z-10 pointer-events-none"
+      style={{ background: "linear-gradient(to left, #060608, transparent)" }} />
+
+    <div className="flex gap-6 tech-marquee">
+      {/* Duplicate the list for seamless loop */}
+      {[...techStack, ...techStack].map((tech, i) => (
+        <div
+          key={i}
+          className="flex flex-col items-center gap-2 flex-shrink-0 group cursor-default"
+        >
+          <div
+            className="w-14 h-14 rounded-2xl flex items-center justify-center glass border border-white/[0.06] group-hover:border-white/20 transition-all duration-300 group-hover:scale-110"
+            style={{ boxShadow: `0 0 0 0 ${tech.color}00` }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 18px 2px ${tech.color}55`;
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 0 0 ${tech.color}00`;
+            }}
+          >
+            <tech.icon size={26} style={{ color: tech.color }} />
+          </div>
+          <span className="text-[11px] text-[#86868b] group-hover:text-white transition-colors duration-200 whitespace-nowrap">
+            {tech.name}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 const CategoryCard = ({ cat, index }: { cat: Category; index: number }) => {
   const { ref, onMouseMove, onMouseLeave } = useTilt(8);
@@ -28,8 +97,6 @@ const CategoryCard = ({ cat, index }: { cat: Category; index: number }) => {
         className="tilt-card glass rounded-2xl p-6 relative overflow-hidden group h-full cursor-default"
       >
         <div data-shimmer className="absolute inset-0 rounded-2xl opacity-0 pointer-events-none" />
-
-        {/* Subtle gradient wash on hover */}
         <div className={`absolute inset-0 bg-gradient-to-br ${cat.gradient} opacity-0 group-hover:opacity-[0.06] transition-opacity duration-500 rounded-2xl`} />
 
         <div className="relative z-10">
@@ -129,7 +196,7 @@ export const Skills = () => {
         {/* 3D Sphere */}
         <div
           ref={sphereReveal.ref}
-          className={`reveal mb-14 ${sphereReveal.visible ? "visible" : ""}`}
+          className={`reveal mb-10 ${sphereReveal.visible ? "visible" : ""}`}
         >
           <div className="glass rounded-3xl p-6 relative overflow-hidden">
             <div className="absolute inset-0 rounded-3xl" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(10,132,255,0.08) 0%, transparent 70%)" }} />
@@ -139,6 +206,9 @@ export const Skills = () => {
             <SkillsSphere />
           </div>
         </div>
+
+        {/* Tech Icon Marquee */}
+        <TechIconStrip />
 
         {/* Category grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

@@ -3,7 +3,6 @@ import { OrbitControls, Text } from '@react-three/drei';
 import { useRef, useMemo, Suspense } from 'react';
 import * as THREE from 'three';
 
-// Layered procedural core — no texture file needed
 const CoreSphere = () => {
   const solidRef = useRef<THREE.Mesh>(null);
   const wire1Ref = useRef<THREE.Mesh>(null);
@@ -28,7 +27,6 @@ const CoreSphere = () => {
 
   return (
     <group>
-      {/* Solid dark metallic core */}
       <mesh ref={solidRef}>
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial
@@ -39,20 +37,14 @@ const CoreSphere = () => {
           roughness={0.08}
         />
       </mesh>
-
-      {/* Sparse wireframe layer 1 — cyan */}
       <mesh ref={wire1Ref}>
         <sphereGeometry args={[2.04, 18, 18]} />
         <meshBasicMaterial wireframe color="#0a84ff" transparent opacity={0.22} />
       </mesh>
-
-      {/* Dense wireframe layer 2 — teal, counter-rotating */}
       <mesh ref={wire2Ref}>
         <sphereGeometry args={[2.08, 28, 28]} />
         <meshBasicMaterial wireframe color="#30d5c8" transparent opacity={0.10} />
       </mesh>
-
-      {/* Soft atmosphere glow */}
       <mesh ref={atmoRef}>
         <sphereGeometry args={[2.35, 32, 32]} />
         <meshBasicMaterial color="#0a84ff" transparent opacity={0.055} side={THREE.BackSide} />
@@ -61,7 +53,9 @@ const CoreSphere = () => {
   );
 };
 
-// Skill label — glowing dot + text, always facing camera
+const _parentWorldQ = new THREE.Quaternion();
+const _invParentQ   = new THREE.Quaternion();
+
 const SkillPin = ({
   position,
   text,
@@ -71,31 +65,46 @@ const SkillPin = ({
   text: string;
   color: string;
 }) => {
-  const textRef = useRef<THREE.Mesh>(null);
-  const dotRef  = useRef<THREE.Mesh>(null);
-  const haloRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null);
+  const textRef  = useRef<THREE.Mesh>(null);
+  const dotRef   = useRef<THREE.Mesh>(null);
+  const haloRef  = useRef<THREE.Mesh>(null);
 
-  useFrame(({ camera, clock }) => {
-    if (textRef.current) textRef.current.quaternion.copy(camera.quaternion);
-    if (dotRef.current)  dotRef.current.quaternion.copy(camera.quaternion);
-    if (haloRef.current) haloRef.current.quaternion.copy(camera.quaternion);
+  useFrame(({ camera }) => {
+    // Cull back-hemisphere labels so we never see flipped/clipped text
+    if (groupRef.current) {
+      const worldPos = new THREE.Vector3();
+      groupRef.current.getWorldPosition(worldPos);
+      const facing = worldPos.normalize().dot(camera.position.clone().normalize());
+      groupRef.current.visible = facing > 0.08;
+      if (!groupRef.current.visible) return;
+    }
+
+    // Correct billboard: localQ = parentWorldQ⁻¹ × cameraWorldQ
+    // This cancels the rotating parent's contribution so the mesh faces
+    // the camera in world space, regardless of the SkillsCloud rotation.
+    if (textRef.current?.parent) {
+      textRef.current.parent.getWorldQuaternion(_parentWorldQ);
+      _invParentQ.copy(_parentWorldQ).invert();
+
+      for (const ref of [textRef, dotRef, haloRef]) {
+        if (ref.current) {
+          ref.current.quaternion.copy(camera.quaternion).premultiply(_invParentQ);
+        }
+      }
+    }
   });
 
   return (
-    <group position={position}>
-      {/* Glowing surface dot */}
+    <group ref={groupRef} position={position}>
       <mesh ref={dotRef}>
         <circleGeometry args={[0.07, 12]} />
         <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2} />
       </mesh>
-
-      {/* Soft halo ring around dot */}
       <mesh ref={haloRef}>
         <circleGeometry args={[0.14, 12]} />
         <meshBasicMaterial color={color} transparent opacity={0.18} />
       </mesh>
-
-      {/* Skill name — offset slightly outward */}
       <Text
         ref={textRef}
         position={[0.22, 0, 0]}
@@ -112,7 +121,6 @@ const SkillPin = ({
   );
 };
 
-// Particle dots scattered around the sphere surface
 const SurfaceParticles = () => {
   const ref = useRef<THREE.Points>(null);
 
@@ -161,47 +169,40 @@ const SkillsCloud = () => {
     if (groupRef.current) groupRef.current.rotation.y += 0.006;
   });
 
-  // Fibonacci sphere: perfectly uniform distribution of N points
   const skills = useMemo(() => {
     const raw: { text: string; color: string }[] = [
-      // Programming
-      { text: 'Python',          color: '#3B82F6' },
-      { text: 'SQL',             color: '#06B6D4' },
-      { text: 'R',               color: '#8B5CF6' },
-      // ML
-      { text: 'Machine Learning',color: '#10B981' },
-      { text: 'XGBoost',         color: '#3B82F6' },
-      { text: 'LightGBM',        color: '#34D399' },
-      { text: 'Random Forest',   color: '#06B6D4' },
-      { text: 'SVM',             color: '#8B5CF6' },
-      { text: 'Sklearn',         color: '#10B981' },
-      // AI / LLM
-      { text: 'LangChain',       color: '#A78BFA' },
-      { text: 'RAG',             color: '#F472B6' },
-      { text: 'N8N',             color: '#A78BFA' },
-      // Cloud / Big Data
-      { text: 'Azure Databricks',color: '#EF4444' },
-      { text: 'Data Factory',    color: '#EF4444' },
-      { text: 'Snowflake',       color: '#38BDF8' },
-      { text: 'PySpark',         color: '#3B82F6' },
-      { text: 'Airflow',         color: '#34D399' },
-      { text: 'dbt',             color: '#FB923C' },
-      { text: 'Data Lake Gen2',  color: '#06B6D4' },
-      // BI / Viz
-      { text: 'Power BI',        color: '#F59E0B' },
-      { text: 'Tableau',         color: '#FBBF24' },
-      // Python libs
-      { text: 'Pandas',          color: '#F97316' },
-      { text: 'NumPy',           color: '#3B82F6' },
+      { text: 'Python',           color: '#3B82F6' },
+      { text: 'SQL',              color: '#06B6D4' },
+      { text: 'R',                color: '#8B5CF6' },
+      { text: 'Machine Learning', color: '#10B981' },
+      { text: 'XGBoost',          color: '#3B82F6' },
+      { text: 'LightGBM',         color: '#34D399' },
+      { text: 'Random Forest',    color: '#06B6D4' },
+      { text: 'SVM',              color: '#8B5CF6' },
+      { text: 'Sklearn',          color: '#10B981' },
+      { text: 'LangChain',        color: '#A78BFA' },
+      { text: 'RAG',              color: '#F472B6' },
+      { text: 'N8N',              color: '#A78BFA' },
+      { text: 'Azure Databricks', color: '#EF4444' },
+      { text: 'Data Factory',     color: '#EF4444' },
+      { text: 'Snowflake',        color: '#38BDF8' },
+      { text: 'PySpark',          color: '#3B82F6' },
+      { text: 'Airflow',          color: '#34D399' },
+      { text: 'dbt',              color: '#FB923C' },
+      { text: 'Data Lake Gen2',   color: '#06B6D4' },
+      { text: 'Power BI',         color: '#F59E0B' },
+      { text: 'Tableau',          color: '#FBBF24' },
+      { text: 'Pandas',           color: '#F97316' },
+      { text: 'NumPy',            color: '#3B82F6' },
     ];
 
     const goldenRatio = (1 + Math.sqrt(5)) / 2;
     const r = 3.7;
 
     return raw.map((s, i) => {
-      const iNorm  = (i + 0.5) / raw.length;
-      const theta  = 2 * Math.PI * i / goldenRatio;
-      const phi    = Math.acos(1 - 2 * iNorm);
+      const iNorm = (i + 0.5) / raw.length;
+      const theta = 2 * Math.PI * i / goldenRatio;
+      const phi   = Math.acos(1 - 2 * iNorm);
       return {
         ...s,
         position: [
