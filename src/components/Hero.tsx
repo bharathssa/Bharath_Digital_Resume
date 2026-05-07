@@ -1,8 +1,15 @@
 
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowDown, Github, Linkedin, Mail, Globe, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
+  const stats = [
+    { value: "6+", label: "Years Experience" },
+    { value: "DP-700", label: "MS Fabric Certified" },
+    { value: "300K+", label: "SKU-Location Pairs" },
+    { value: "3", label: "Global Regions" },
+  ];
+
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Animated Background Elements */}
@@ -18,55 +25,94 @@ export const Hero = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <div className="animate-fade-in">
-          <div className="mb-6">
+
+          {/* Certification badge */}
+          <div className="mb-6 flex justify-center">
+            <span className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-400/40 text-blue-300 text-sm font-medium tracking-wide px-5 py-2 rounded-full">
+              <Award size={14} className="text-blue-400" />
+              Microsoft Certified Fabric Data Engineer · DP-700
+            </span>
+          </div>
+
+          <div className="mb-4">
             <span className="text-cyan-400 text-lg font-medium tracking-wide uppercase">Hi, I'm</span>
           </div>
-          
+
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
             <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
               Bharath Chandran
             </span>
           </h1>
-          
+
           <div className="text-xl md:text-2xl text-gray-300 mb-2">
-            <span className="text-cyan-400">FinTech Business Analyst</span>
+            <span className="text-cyan-400">Data Engineer</span>
+            {" & "}
+            <span className="text-purple-400">AI Analytics Specialist</span>
           </div>
-          <div className="text-xl md:text-2xl text-gray-300 mb-8">
-            and <span className="text-purple-400">Data Engineer</span>
+          <div className="text-base text-gray-400 mb-6">
+            Auckland, New Zealand · Pursuing{" "}
+            <span className="text-blue-400 font-medium">Master of Business Analytics (FinTech)</span>
+            {" "} at University of Auckland
           </div>
 
-          <p className="text-lg text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Highly skilled Data Engineer with 6+ years of expertise in Machine Learning, 
-            Model Deployment, Data pipelines, Data Analytics, Data Visualization
+          <p className="text-lg text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+            6+ years designing and delivering scalable data pipelines, AI-enabled analytics,
+            and self-service BI solutions across global enterprise environments — AME, APJ &amp; EMEA.
           </p>
+
+          {/* Stats row */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-10">
+            {stats.map((stat, i) => (
+              <div
+                key={i}
+                className="bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 py-4 hover:border-cyan-400/40 transition-all duration-300 hover:scale-105"
+              >
+                <div className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                  {stat.value}
+                </div>
+                <div className="text-xs text-gray-400 mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <a href="mailto:bharathssa16@gmail.com">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg shadow-cyan-500/25"
               >
                 <Mail className="mr-2" size={20} />
                 Get In Touch
               </Button>
             </a>
-            
+
             <div className="flex space-x-4">
-              <a 
-                href="https://www.linkedin.com/in/bharathchandran98/" 
-                target="_blank" 
+              <a
+                href="https://www.linkedin.com/in/bharathchandran98/"
+                target="_blank"
                 rel="noopener noreferrer"
+                title="LinkedIn"
                 className="p-3 rounded-full bg-slate-800/50 backdrop-blur-sm text-gray-300 hover:text-cyan-400 hover:bg-slate-700/50 transition-all duration-300 hover:scale-110 border border-slate-700/50 hover:border-cyan-400/50"
               >
                 <Linkedin size={24} />
               </a>
-              <a 
-                href="https://github.com/bharathssa" 
-                target="_blank" 
+              <a
+                href="https://github.com/bharathssa"
+                target="_blank"
                 rel="noopener noreferrer"
+                title="GitHub"
                 className="p-3 rounded-full bg-slate-800/50 backdrop-blur-sm text-gray-300 hover:text-purple-400 hover:bg-slate-700/50 transition-all duration-300 hover:scale-110 border border-slate-700/50 hover:border-purple-400/50"
               >
                 <Github size={24} />
+              </a>
+              <a
+                href="https://bharath.tech"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Portfolio"
+                className="p-3 rounded-full bg-slate-800/50 backdrop-blur-sm text-gray-300 hover:text-blue-400 hover:bg-slate-700/50 transition-all duration-300 hover:scale-110 border border-slate-700/50 hover:border-blue-400/50"
+              >
+                <Globe size={24} />
               </a>
             </div>
           </div>

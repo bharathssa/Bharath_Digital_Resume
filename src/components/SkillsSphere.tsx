@@ -4,8 +4,6 @@ import { useRef, Suspense } from 'react';
 import * as THREE from 'three';
 import { TextureLoader } from 'three';
 
-
-
 const SkillsText = ({ position, text, color }: { position: [number, number, number], text: string, color: string }) => {
   const meshRef = useRef<THREE.Mesh>(null);
 
@@ -19,7 +17,7 @@ const SkillsText = ({ position, text, color }: { position: [number, number, numb
     <Text
       ref={meshRef}
       position={position}
-      fontSize={0.4}
+      fontSize={0.38}
       color={color}
       anchorX="center"
       anchorY="middle"
@@ -31,7 +29,7 @@ const SkillsText = ({ position, text, color }: { position: [number, number, numb
 
 const RotatingGlobe = () => {
   const globeRef = useRef<THREE.Mesh>(null);
-  const texture = useLoader(TextureLoader, "/textures/globe.png");
+  const texture = useLoader(TextureLoader, "globe.png");
 
   useFrame(() => {
     if (globeRef.current) {
@@ -52,22 +50,25 @@ const SkillsCloud = () => {
 
   useFrame(() => {
     if (groupRef.current) {
-      groupRef.current.rotation.y += 0.01;
+      groupRef.current.rotation.y += 0.008;
     }
   });
 
   const skills: { text: string; position: [number, number, number]; color: string }[] = [
-    { text: 'Python', position: [3.5, 1.2, 1.2], color: '#3B82F6' },
-    { text: 'SPSS', position: [-3.5, 1.2, -1.2], color: '#8B5CF6' },
-    { text: 'SQL', position: [1.2, -3.5, 1.2], color: '#06B6D4' },
-    { text: 'Power BI', position: [-1.2, -1.2, 3.5], color: '#F59E0B' },
-    { text: 'Azure', position: [3.5, -1.2, -1.2], color: '#EF4444' },
-    { text: 'Machine Learning', position: [-3.5, 0, 1.2], color: '#10B981' },
-    { text: 'Pandas', position: [1.2, 3.5, -1.2], color: '#F97316' },
-    { text: 'Pyspark', position: [-1.2, 3.5, 1.2], color: '#3B82F6' },
-    { text: 'NumPy', position: [0, -3.5, -2.5], color: '#8B5CF6' },
-    { text: 'Sklearn', position: [3.5, 0, 2.5], color: '#06B6D4' },
-    { text: 'Big Data', position: [0, 0, 4], color: '#FBBF24' }
+    { text: 'Python',          position: [3.5,  1.2,  1.2],  color: '#3B82F6' },
+    { text: 'SQL',             position: [-3.5, 1.2,  -1.2], color: '#06B6D4' },
+    { text: 'R',               position: [1.2,  -3.5, 1.2],  color: '#8B5CF6' },
+    { text: 'Power BI',        position: [-1.2, -1.2, 3.5],  color: '#F59E0B' },
+    { text: 'Azure Databricks',position: [3.5,  -1.2, -1.2], color: '#EF4444' },
+    { text: 'Machine Learning',position: [-3.5, 0,    1.2],  color: '#10B981' },
+    { text: 'Pandas',          position: [1.2,  3.5,  -1.2], color: '#F97316' },
+    { text: 'PySpark',         position: [-1.2, 3.5,  1.2],  color: '#3B82F6' },
+    { text: 'Snowflake',       position: [0,    -3.5, -2.5], color: '#38BDF8' },
+    { text: 'dbt',             position: [3.5,  0,    2.5],  color: '#FB923C' },
+    { text: 'LangChain',       position: [0,    0,    4.0],  color: '#A78BFA' },
+    { text: 'RAG',             position: [-3.5, -1.2, 0],    color: '#F472B6' },
+    { text: 'Airflow',         position: [2.5,  2.5,  -2.0], color: '#34D399' },
+    { text: 'Tableau',         position: [-2.5, -2.5, 2.0],  color: '#FBBF24' },
   ];
 
   return (
