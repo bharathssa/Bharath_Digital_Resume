@@ -54,7 +54,7 @@ A 3D rotating globe visualizes my tech stack including:
 
 | Role | Company | Duration |
 |------|---------|----------|
-| **Customer Ops Team Member** | Woolworths NZ | Apr 2025 – Present |
+| **Customer Ops Team Member** | Woolworths NZ | Apr 2025 – Nov 2025 |
 | **Data Engineer** | Hewlett-Packard | Jun 2022 – Mar 2025 |
 | **Product Engineer** | Molex India | Aug 2020 – May 2022 |
 | **Assistant Engineer** | TÜV Rheinland | Dec 2018 – Jul 2020 |

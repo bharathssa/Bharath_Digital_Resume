@@ -208,7 +208,7 @@ export const Education = () => {
                 <ul className="space-y-1.5 text-[#86868b] text-xs">
                   <li>▸ Student Visa · Restricted working rights in NZ</li>
                   <li>▸ Open to immediate opportunities — Data Engineering, Analytics &amp; AI</li>
-                  <li>▸ Local NZ experience — Woolworths NZ (Apr 2025 – present)</li>
+                  <li>▸ Local NZ experience — Woolworths NZ (Apr 2025 – Nov 2025)</li>
                 </ul>
               </div>
             </div>

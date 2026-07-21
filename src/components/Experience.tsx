@@ -95,7 +95,7 @@ export const Experience = () => {
       title: "Team Member – Customer Operations",
       company: "Woolworths New Zealand",
       location: "Auckland, NZ",
-      period: "Apr 2025 – Present",
+      period: "Apr 2025 – Nov 2025",
       tag: "Local NZ Experience",
       tagColor: "text-green-400 border-green-400/30",
       accent: "from-green-400 to-emerald-500",
