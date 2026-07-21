@@ -154,35 +154,46 @@ export const Projects = () => {
 
   const projects: Project[] = [
     {
+      title: "Atlikon FMCG Data Lakehouse",
+      subtitle: "Lakehouse · Featured Project",
+      description: "Modern FMCG lakehouse consolidating child-company retail transactions into parent-level monthly reporting with Bronze, Silver and Gold medallion layers, Delta tables, rollup logic and governed Power BI-ready star schemas.",
+      tech: ["Databricks", "AWS S3", "Delta Lake", "Unity Catalog", "SQL", "Power BI"],
+      featured: true,
+      githubLink: "https://github.com/bharathssa/Atlikon_databricks_project",
+      gradient:   "linear-gradient(135deg, #082f49 0%, #075985 45%, #0f766e 100%)",
+      glowColor:  "rgba(14,165,233,0.4)",
+      accentText: "text-cyan-300",
+    },
+    {
       title: "AlphaQuest Capital — BTC Signal Dashboard",
-      subtitle: "ML Trading · Featured Project",
+      subtitle: "ML Trading · Signal Dashboard",
       description: "End-to-end ML pipeline with XGBoost, LightGBM, Random Forest and Gradient Boosting competing to predict daily BTC/ETH price movements. Auto-selects champion model by F1 score and dynamically allocates a simulated $50M portfolio across 4 market regimes.",
       tech: ["XGBoost", "LightGBM", "Random Forest", "Gradient Boosting", "Python", "F1 Optimisation"],
-      featured: true,
       liveLink:   "https://alphaquest.streamlit.app/",
-      githubLink: "https://github.com/bharathssa",
+      githubLink: "https://github.com/bharathssa/BTC-Signal-Dashboard",
       gradient:   "linear-gradient(135deg, #1a0533 0%, #3b0f6b 40%, #6b21a8 70%, #a855f7 100%)",
       glowColor:  "rgba(168,85,247,0.4)",
       accentText: "text-purple-300",
     },
     {
-      title: "Monte Carlo Retirement Planner",
-      subtitle: "FinTech · Simulation",
+      title: "Financial Advisor — Monte Carlo Planner",
+      subtitle: "FinTech · Retirement Simulation",
       description: "35-year financial outcome forecasting across superannuation, equities, and bitcoin. Grew corpus to $3.5M via dynamic asset glide path with actionable drawdown recommendations.",
       tech: ["Python", "Monte Carlo", "Financial Modelling", "Streamlit"],
       liveLink:   "https://financialadvisornz.streamlit.app/",
-      githubLink: "https://github.com/bharathssa",
+      githubLink: "https://github.com/bharathssa/Financial_Advisor",
       gradient:   "linear-gradient(135deg, #052e0f 0%, #065f46 50%, #059669 100%)",
       glowColor:  "rgba(5,150,105,0.4)",
       accentText: "text-emerald-300",
     },
     {
-      title: "Inventory Optimisation & Demand Forecasting",
-      subtitle: "Enterprise · HP Project",
-      description: "Time series analysis across 300K+ SKU-location pairs. Contributed to 8% excess inventory recovery and 15% active customer growth across APJ, EMEA and AMS regions.",
-      tech: ["Time Series", "Azure Databricks", "Python", "Power BI"],
-      gradient:   "linear-gradient(135deg, #0c1445 0%, #1e3a8a 50%, #2563eb 100%)",
-      glowColor:  "rgba(37,99,235,0.4)",
+      title: "StockPortfolio Data Pipeline",
+      subtitle: "Portfolio Analytics · Automation",
+      description: "Production-style portfolio tracking system consolidating Indian equities, US equities and mutual funds into one analytics-ready layer with scheduled market-close pipelines and Azure SQL upserts.",
+      tech: ["Python", "Azure SQL", "GitHub Actions", "Azure Functions", "T-SQL", "JSON APIs"],
+      githubLink: "https://github.com/bharathssa/StockPortfolio",
+      gradient:   "linear-gradient(135deg, #102a43 0%, #1d4ed8 45%, #4338ca 100%)",
+      glowColor:  "rgba(59,130,246,0.4)",
       accentText: "text-blue-300",
     },
     {
@@ -224,7 +235,7 @@ export const Projects = () => {
         <div ref={headingReveal.ref} className={`reveal text-center mb-16 ${headingReveal.visible ? "visible" : ""}`}>
           <p className="text-[#0a84ff] text-sm font-semibold tracking-[0.2em] uppercase mb-3">Portfolio</p>
           <h2 className="font-black text-gradient-hero" style={{ fontSize: "clamp(2.4rem, 5vw, 4rem)", letterSpacing: "-0.03em" }}>
-            Technical Projects
+            Technical Personal Projects
           </h2>
         </div>
 

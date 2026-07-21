@@ -97,7 +97,7 @@ export const About = () => {
             designing{" "}<span className="text-blue-400">scalable data pipelines</span>,{" "}
             <span className="text-purple-400">AI-enabled analytics</span>, and{" "}
             <span className="text-cyan-400">self-service BI solutions</span>{" "}
-            across global enterprise environments. Currently completing a{" "}
+            across global enterprise environments. Graduate of the{" "}
             <span className="text-blue-400 font-medium">Master of Business Analytics (FinTech)</span> at the University of Auckland.
           </p>
         </div>

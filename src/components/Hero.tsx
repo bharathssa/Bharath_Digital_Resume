@@ -109,7 +109,7 @@ export const Hero = () => {
           6+ years designing scalable data pipelines, AI-enabled analytics &amp; self-service BI
           across global enterprise — AME · APJ · EMEA.
           <br />
-          <span className="text-[#a1a1a6]">Currently pursuing MBA (FinTech) · University of Auckland</span>
+          <span className="text-[#a1a1a6]">Master of Business Analytics (FinTech) graduate · University of Auckland</span>
         </p>
 
         {/* Stats strip */}

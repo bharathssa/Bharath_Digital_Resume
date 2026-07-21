@@ -94,8 +94,8 @@ export const Education = () => {
     {
       degree: "Master of Business Analytics (FinTech)",
       school: "University of Auckland, New Zealand",
-      period: "Mar 2025 – Present",
-      status: "Pursuing",
+      period: "Mar 2025 – Jun 2026",
+      status: "Completed",
       highlights: [
         "A+ — BUSINFO 702 Information Management (Certificate of Excellence)",
         "Student Choice Best Analysis Award — BUSINFO 704",
@@ -206,8 +206,8 @@ export const Education = () => {
               <div className="glass rounded-2xl p-5 mt-3" style={{ background: "linear-gradient(135deg, rgba(10,132,255,0.06), rgba(191,90,242,0.04))" }}>
                 <h4 className="text-[#0a84ff] font-semibold text-sm mb-3">Work Eligibility — New Zealand</h4>
                 <ul className="space-y-1.5 text-[#86868b] text-xs">
-                  <li>▸ Student Visa · Restricted working rights in NZ</li>
-                  <li>▸ Open to immediate opportunities — Data Engineering, Analytics &amp; AI</li>
+                  <li>▸ 3-year Post Study Work Visa · Valid until 18 July 2029</li>
+                  <li>▸ Full, unrestricted NZ work rights · Available immediately</li>
                   <li>▸ Local NZ experience — Woolworths NZ (Apr 2025 – Nov 2025)</li>
                 </ul>
               </div>
