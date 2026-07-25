@@ -1,4 +1,6 @@
 
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { useTilt } from "@/hooks/use-tilt";
 
@@ -49,17 +51,17 @@ const ExperienceCard = ({ exp, isLeft }: { exp: Exp; isLeft: boolean }) => {
           <span className={`text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full border ${exp.tagColor}`}>
             {exp.tag}
           </span>
-          <span className="text-[#636366] text-xs">{exp.period}</span>
+          <span className="text-[#78787d] text-xs">{exp.period}</span>
         </div>
 
         {/* Title */}
         <h3 className="text-lg font-bold text-[#f5f5f7] leading-tight mb-0.5">{exp.title}</h3>
         <p className="text-[#0a84ff] text-sm font-semibold mb-0.5">{exp.company}</p>
-        <p className="text-[#636366] text-xs mb-3">{exp.location}</p>
+        <p className="text-[#78787d] text-xs mb-3">{exp.location}</p>
 
         {/* Context */}
         {exp.context && (
-          <p className="text-[#636366] text-xs italic mb-3 leading-relaxed border-l-2 border-white/10 pl-3">{exp.context}</p>
+          <p className="text-[#78787d] text-xs italic mb-3 leading-relaxed border-l-2 border-white/10 pl-3">{exp.context}</p>
         )}
 
         {/* Achievement chips */}
@@ -89,6 +91,15 @@ const ExperienceCard = ({ exp, isLeft }: { exp: Exp; isLeft: boolean }) => {
 
 export const Experience = () => {
   const headingReveal = useScrollReveal();
+  const treeRef = useRef<HTMLDivElement>(null);
+
+  // The spine "draws" itself top-down as the timeline scrolls through view,
+  // rather than sitting fully rendered before the user gets there.
+  const { scrollYProgress: treeProgress } = useScroll({
+    target: treeRef,
+    offset: ["start 0.8", "end 0.4"],
+  });
+  const spineScale = useTransform(treeProgress, [0, 1], [0, 1]);
 
   const experiences: Exp[] = [
     {
@@ -180,15 +191,28 @@ export const Experience = () => {
         </div>
 
         {/* ── Tree ── */}
-        <div className="relative">
+        <div ref={treeRef} className="relative">
 
           {/* Central spine — full height, desktop only */}
-          <div
-            className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px hidden md:block"
-            style={{
-              background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.12) 6%, rgba(255,255,255,0.12) 94%, transparent)",
-            }}
-          />
+          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px hidden md:block overflow-hidden">
+            {/* Faint static track, always present for structure */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.1) 6%, rgba(255,255,255,0.1) 94%, transparent)",
+              }}
+            />
+            {/* Bright line that fills in as the timeline scrolls through view */}
+            <motion.div
+              className="absolute inset-0"
+              style={{
+                scaleY: spineScale,
+                transformOrigin: "top",
+                background: "linear-gradient(to bottom, #0a84ff, #bf5af2 45%, #30d5c8 80%, transparent 96%)",
+                boxShadow: "0 0 10px rgba(10,132,255,0.7)",
+              }}
+            />
+          </div>
 
           <div className="space-y-16">
             {experiences.map((exp, index) => (

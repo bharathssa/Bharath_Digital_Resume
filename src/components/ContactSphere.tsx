@@ -165,7 +165,7 @@ const Scene = () => {
   const innerRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const atmoRef = useRef<THREE.Mesh>(null);
-  const contactTexture = useLoader(TextureLoader, 'contact_globe.png');
+  const contactTexture = useLoader(TextureLoader, 'contact_globe.jpg');
 
   useFrame(({ clock }) => {
     const t = clock.elapsedTime;
@@ -186,15 +186,24 @@ const Scene = () => {
     }
   });
 
-  // Octahedron vertices — perfectly spread in 3D
-  const nodes = [
-    { basePosition: [ 3.6,  0,    0  ] as [number,number,number], label: 'Email',      color: '#06B6D4', symbol: '@'  },
-    { basePosition: [-3.6,  0,    0  ] as [number,number,number], label: 'LinkedIn',   color: '#0A66C2', symbol: 'in' },
-    { basePosition: [ 0,    3.6,  0  ] as [number,number,number], label: 'GitHub',     color: '#8B5CF6', symbol: '<>' },
-    { basePosition: [ 0,   -3.6,  0  ] as [number,number,number], label: 'Auckland NZ',color: '#10B981', symbol: 'NZ' },
-    { basePosition: [ 0,    0,    3.6] as [number,number,number], label: 'Kaggle',     color: '#F59E0B', symbol: 'K'  },
-    { basePosition: [ 0,    0,   -3.6] as [number,number,number], label: 'HackerRank', color: '#34D399', symbol: 'HR' },
-  ];
+  // Octahedron vertices — evenly spread in 3D, then rotated off-axis so no
+  // node sits directly in front of (or behind) the default camera position;
+  // an axis-aligned vertex there would visually overlap the center globe.
+  const nodes = useMemo(() => {
+    const axisAligned: { offset: THREE.Vector3; label: string; color: string; symbol: string }[] = [
+      { offset: new THREE.Vector3( 3.6,  0,    0  ), label: 'Email',       color: '#06B6D4', symbol: '@'  },
+      { offset: new THREE.Vector3(-3.6,  0,    0  ), label: 'LinkedIn',    color: '#0A66C2', symbol: 'in' },
+      { offset: new THREE.Vector3( 0,    3.6,  0  ), label: 'GitHub',      color: '#8B5CF6', symbol: '<>' },
+      { offset: new THREE.Vector3( 0,   -3.6,  0  ), label: 'Auckland NZ', color: '#10B981', symbol: 'NZ' },
+      { offset: new THREE.Vector3( 0,    0,    3.6), label: 'Kaggle',      color: '#F59E0B', symbol: 'K'  },
+      { offset: new THREE.Vector3( 0,    0,   -3.6), label: 'HackerRank',  color: '#34D399', symbol: 'HR' },
+    ];
+    const tilt = new THREE.Euler(0.55, 0.65, 0.2);
+    return axisAligned.map(({ offset, ...rest }) => {
+      const p = offset.clone().applyEuler(tilt);
+      return { basePosition: [p.x, p.y, p.z] as [number, number, number], ...rest };
+    });
+  }, []);
 
   return (
     <group>

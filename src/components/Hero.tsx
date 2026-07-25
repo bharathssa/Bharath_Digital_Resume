@@ -1,11 +1,26 @@
 
 import { useEffect, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail, Globe, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
   const statsRef = useRef<HTMLDivElement>(null);
-  const introImage = `${import.meta.env.BASE_URL}intro-data-engineer.png`;
+  const sectionRef = useRef<HTMLElement>(null);
+  const introImage = `${import.meta.env.BASE_URL}intro-data-engineer.jpg`;
+
+  // Scroll-linked depth: as the hero scrolls out of view, the photo drifts
+  // and zooms slightly faster than the text column, giving the two layers
+  // a sense of physical separation instead of moving as one flat plane.
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const textY       = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  const imageY       = useTransform(scrollYProgress, [0, 1], [0, 130]);
+  const imageScale    = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const imageOpacity  = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
 
   // Parallax orbs on mouse move
   useEffect(() => {
@@ -38,7 +53,7 @@ export const Hero = () => {
   ];
 
   return (
-    <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-24 lg:py-20">
+    <section ref={sectionRef} id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-24 lg:py-20">
 
       {/* ── Ambient orbs ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -74,7 +89,7 @@ export const Hero = () => {
       <div className="relative z-10 grid w-full max-w-7xl items-center gap-12 px-6 lg:grid-cols-[minmax(0,0.94fr)_minmax(360px,0.78fr)] lg:gap-14">
 
         {/* Cert badge */}
-        <div className="text-center lg:text-left">
+        <motion.div style={{ y: textY, opacity: textOpacity }} className="text-center lg:text-left">
           <div className="animate-fade-up mb-8" style={{ animationDelay: "0.1s" }}>
             <span className="inline-flex items-center gap-2 glass text-blue-300 text-xs font-medium tracking-widest uppercase px-5 py-2 rounded-full">
               <Award size={13} className="text-blue-400" />
@@ -126,7 +141,7 @@ export const Hero = () => {
                 className="glass rounded-2xl px-4 py-4 group hover:bg-white/[0.07] transition-all duration-300 hover:-translate-y-0.5"
               >
                 <div className="text-2xl font-bold text-gradient-blue mb-0.5 group-hover:scale-105 transition-transform">{s.value}</div>
-                <div className="text-[#636366] text-xs">{s.label}</div>
+                <div className="text-[#78787d] text-xs">{s.label}</div>
               </div>
             ))}
           </div>
@@ -154,23 +169,28 @@ export const Hero = () => {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="animate-fade-up hero-image-stage mx-auto w-full max-w-[430px] sm:max-w-[520px] lg:mx-0 lg:justify-self-end" style={{ animationDelay: "0.4s" }}>
-          <div className="hero-image-shell group relative">
-            <img
-              src={introImage}
-              alt="Bharath Chandran in a data engineering workspace"
-              className="relative z-10 aspect-[4/5] w-full rounded-[2rem] object-cover shadow-2xl shadow-blue-950/35 transition duration-700 group-hover:scale-[1.018]"
-            />
-            <div className="pointer-events-none absolute inset-0 z-20 rounded-[2rem] ring-1 ring-white/15" />
-            <div className="hero-image-sheen pointer-events-none absolute inset-0 z-20 rounded-[2rem]" />
-            <div className="hero-scan-line pointer-events-none absolute left-[8%] right-[8%] top-0 z-30 h-px bg-cyan-300/70 shadow-[0_0_24px_rgba(50,210,198,0.75)]" />
-            <div className="hero-data-node hero-data-node-1" />
-            <div className="hero-data-node hero-data-node-2" />
-            <div className="hero-data-node hero-data-node-3" />
+        {/* Outer motion wrapper carries scroll-linked transform only — kept
+            separate from the inner div's mount-in CSS animation so the two
+            don't fight over the `transform`/`opacity` properties. */}
+        <motion.div style={{ y: imageY, scale: imageScale, opacity: imageOpacity }} className="lg:justify-self-end">
+          <div className="animate-fade-up hero-image-stage mx-auto w-full max-w-[430px] sm:max-w-[520px] lg:mx-0" style={{ animationDelay: "0.4s" }}>
+            <div className="hero-image-shell group relative">
+              <img
+                src={introImage}
+                alt="Bharath Chandran in a data engineering workspace"
+                className="relative z-10 aspect-[4/5] w-full rounded-[2rem] object-cover shadow-2xl shadow-blue-950/35 transition duration-700 group-hover:scale-[1.018]"
+              />
+              <div className="pointer-events-none absolute inset-0 z-20 rounded-[2rem] ring-1 ring-white/15" />
+              <div className="hero-image-sheen pointer-events-none absolute inset-0 z-20 rounded-[2rem]" />
+              <div className="hero-scan-line pointer-events-none absolute left-[8%] right-[8%] top-0 z-30 h-px bg-cyan-300/70 shadow-[0_0_24px_rgba(50,210,198,0.75)]" />
+              <div className="hero-data-node hero-data-node-1" />
+              <div className="hero-data-node hero-data-node-2" />
+              <div className="hero-data-node hero-data-node-3" />
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Scroll cue */}

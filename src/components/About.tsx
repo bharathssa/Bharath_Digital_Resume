@@ -21,7 +21,7 @@ const MetricCard = ({ value, label, sublabel, delay }: {
           {value}
         </div>
         <div className="text-[#f5f5f7] text-sm font-semibold mb-0.5">{label}</div>
-        <div className="text-[#636366] text-xs">{sublabel}</div>
+        <div className="text-[#78787d] text-xs">{sublabel}</div>
       </div>
     </div>
   );

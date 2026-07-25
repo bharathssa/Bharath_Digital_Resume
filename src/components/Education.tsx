@@ -26,7 +26,7 @@ const EducationCard = ({ degree, school, period, status, grade, highlights, inde
             )}
           </div>
           <p className="text-[#86868b] text-sm font-medium mb-1">{school}</p>
-          <p className="text-[#636366] text-xs mb-3">{period}</p>
+          <p className="text-[#78787d] text-xs mb-3">{period}</p>
           {grade && <p className="text-green-400/80 text-xs mb-3">{grade}</p>}
           {highlights && (
             <ul className="space-y-1.5 mt-3 border-t border-white/[0.06] pt-3">
@@ -73,7 +73,7 @@ const CertCard = ({ icon, title, code, detail, link, featured, index }: {
                 <span className="text-[10px] bg-blue-500/15 text-blue-300 border border-blue-400/25 rounded px-1.5 py-0.5 font-mono font-bold">{code}</span>
               )}
             </div>
-            <p className="text-[#636366] text-xs mb-1.5">{detail}</p>
+            <p className="text-[#78787d] text-xs mb-1.5">{detail}</p>
             {link && (
               <a href={link} target="_blank" rel="noopener noreferrer"
                 className="text-xs text-[#0a84ff] hover:text-blue-300 transition-colors">
@@ -196,7 +196,7 @@ export const Education = () => {
                     <div className="text-purple-400 mt-0.5 shrink-0">{item.icon}</div>
                     <div>
                       <p className="text-[#f5f5f7] font-semibold text-sm mb-0.5">{item.title}</p>
-                      <p className="text-[#636366] text-xs mb-1">{item.period}</p>
+                      <p className="text-[#78787d] text-xs mb-1">{item.period}</p>
                       <p className="text-[#86868b] text-xs leading-relaxed">{item.detail}</p>
                     </div>
                   </div>

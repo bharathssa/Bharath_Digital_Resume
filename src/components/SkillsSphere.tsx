@@ -68,9 +68,11 @@ const SkillPin = ({
     if (!groupRef.current) return;
     const worldPos = new THREE.Vector3();
     groupRef.current.getWorldPosition(worldPos);
-    // Hide labels that face away from the camera
+    // Hide labels that face away from the camera — a tighter cone than a
+    // hemisphere keeps simultaneous visible labels sparse enough to avoid
+    // screen-space overlap between neighboring pins.
     const facing = worldPos.normalize().dot(camera.position.clone().normalize());
-    groupRef.current.visible = facing > 0.12;
+    groupRef.current.visible = facing > 0.35;
   });
 
   return (
@@ -170,7 +172,7 @@ const SkillsCloud = () => {
     ];
 
     const goldenRatio = (1 + Math.sqrt(5)) / 2;
-    const r = 3.7;
+    const r = 4.3;
     return raw.map((s, i) => {
       const iNorm = (i + 0.5) / raw.length;
       const theta = 2 * Math.PI * i / goldenRatio;

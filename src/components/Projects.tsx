@@ -59,7 +59,7 @@ const ProjectCard = ({ project, index, featured }: { project: Project; index: nu
   return (
     <div
       ref={reveal.ref}
-      className={`reveal ${reveal.visible ? "visible" : ""} ${featured ? "md:col-span-2" : ""}`}
+      className={`reveal-card ${reveal.visible ? "visible" : ""} ${featured ? "md:col-span-2" : ""}`}
       style={{ transitionDelay: `${index * 0.07}s` }}
     >
       <div
