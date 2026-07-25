@@ -205,6 +205,56 @@
   .animate-fade-up   { animation: fade-up  0.9s cubic-bezier(0.23,1,0.32,1) both; }
   .animate-scale-in  { animation: scale-in 0.6s cubic-bezier(0.23,1,0.32,1) both; }
   .animate-shimmer   { animation: shimmer  2.4s linear infinite; }
+
+  .hero-image-stage {
+    perspective: 1200px;
+  }
+  .hero-image-shell {
+    isolation: isolate;
+    animation: hero-image-float 7s ease-in-out infinite;
+    transform-style: preserve-3d;
+  }
+  .hero-image-shell::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 2rem;
+    background: linear-gradient(145deg, rgba(10,132,255,0.55), rgba(191,90,242,0.35), rgba(50,210,198,0.4));
+    opacity: 0.5;
+    filter: blur(18px);
+    transform: translateZ(-1px);
+  }
+  .hero-image-shell::after {
+    content: "";
+    position: absolute;
+    inset: 12%;
+    z-index: 0;
+    border-radius: 999px;
+    background: rgba(10,132,255,0.18);
+    filter: blur(80px);
+  }
+  .hero-image-sheen {
+    background: linear-gradient(115deg, transparent 18%, rgba(255,255,255,0.16) 42%, transparent 62%);
+    transform: translateX(-120%);
+    animation: hero-image-sheen 5.8s ease-in-out infinite;
+    mix-blend-mode: screen;
+  }
+  .hero-scan-line {
+    animation: hero-scan-line 4.8s ease-in-out infinite;
+  }
+  .hero-data-node {
+    position: absolute;
+    z-index: 30;
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 999px;
+    background: #32d2c6;
+    box-shadow: 0 0 0 8px rgba(50,210,198,0.08), 0 0 24px rgba(50,210,198,0.75);
+    animation: hero-data-pulse 2.8s ease-in-out infinite;
+  }
+  .hero-data-node-1 { top: 17%; left: 9%; }
+  .hero-data-node-2 { top: 46%; right: 8%; animation-delay: 0.7s; }
+  .hero-data-node-3 { bottom: 13%; left: 18%; animation-delay: 1.4s; }
 }
 
 /* ─── Keyframes ─── */
@@ -244,4 +294,31 @@
 @keyframes orbit {
   from { transform: rotate(0deg) translateX(120px) rotate(0deg); }
   to   { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+}
+@keyframes hero-image-float {
+  0%,100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+  50% { transform: translateY(-14px) rotateX(1.5deg) rotateY(-2deg); }
+}
+@keyframes hero-image-sheen {
+  0%, 35% { transform: translateX(-120%); opacity: 0; }
+  50% { opacity: 1; }
+  70%, 100% { transform: translateX(120%); opacity: 0; }
+}
+@keyframes hero-scan-line {
+  0%,100% { transform: translateY(18px); opacity: 0; }
+  18%,72% { opacity: 0.9; }
+  82% { transform: translateY(calc(min(520px, 100vw) * 1.04)); opacity: 0; }
+}
+@keyframes hero-data-pulse {
+  0%,100% { transform: scale(0.86); opacity: 0.45; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-image-shell,
+  .hero-image-sheen,
+  .hero-scan-line,
+  .hero-data-node {
+    animation: none;
+  }
 }

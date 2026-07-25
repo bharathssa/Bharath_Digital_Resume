@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
   const statsRef = useRef<HTMLDivElement>(null);
+  const introImage = `${import.meta.env.BASE_URL}intro-data-engineer.png`;
 
   // Parallax orbs on mouse move
   useEffect(() => {
@@ -37,7 +38,7 @@ export const Hero = () => {
   ];
 
   return (
-    <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-24 lg:py-20">
 
       {/* ── Ambient orbs ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -70,86 +71,104 @@ export const Hero = () => {
       </div>
 
       {/* ── Content ── */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+      <div className="relative z-10 grid w-full max-w-7xl items-center gap-12 px-6 lg:grid-cols-[minmax(0,0.94fr)_minmax(360px,0.78fr)] lg:gap-14">
 
         {/* Cert badge */}
-        <div className="animate-fade-up mb-8" style={{ animationDelay: "0.1s" }}>
-          <span className="inline-flex items-center gap-2 glass text-blue-300 text-xs font-medium tracking-widest uppercase px-5 py-2 rounded-full">
-            <Award size={13} className="text-blue-400" />
-            Microsoft Certified Fabric Data Engineer · DP-700
-          </span>
-        </div>
+        <div className="text-center lg:text-left">
+          <div className="animate-fade-up mb-8" style={{ animationDelay: "0.1s" }}>
+            <span className="inline-flex items-center gap-2 glass text-blue-300 text-xs font-medium tracking-widest uppercase px-5 py-2 rounded-full">
+              <Award size={13} className="text-blue-400" />
+              Microsoft Certified Fabric Data Engineer · DP-700
+            </span>
+          </div>
 
-        {/* Name */}
-        <div className="animate-fade-up" style={{ animationDelay: "0.2s" }}>
-          <h1
-            className="font-black leading-none tracking-tight mb-4 text-gradient-hero"
-            style={{ fontSize: "clamp(3.8rem, 10vw, 9rem)", letterSpacing: "-0.04em" }}
-          >
-            Bharath<br />Chandran
-          </h1>
-        </div>
-
-        {/* Roles */}
-        <div className="animate-fade-up flex flex-wrap items-center justify-center gap-3 mb-6" style={{ animationDelay: "0.35s" }}>
-          {["Data Engineer", "AI Analytics Specialist", "Microsoft Fabric"].map((r, i) => (
-            <span key={i} className={`text-sm font-medium px-3 py-1 rounded-full glass ${
-              i === 0 ? "text-blue-300"  :
-              i === 1 ? "text-purple-300":
-                        "text-cyan-300"
-            }`}>{r}</span>
-          ))}
-        </div>
-
-        {/* Tagline */}
-        <p
-          className="animate-fade-up text-[#86868b] text-lg max-w-2xl mx-auto leading-relaxed mb-10"
-          style={{ animationDelay: "0.45s" }}
-        >
-          6+ years designing scalable data pipelines, AI-enabled analytics &amp; self-service BI
-          across global enterprise — AME · APJ · EMEA.
-          <br />
-          <span className="text-[#a1a1a6]">Master of Business Analytics (FinTech) graduate · University of Auckland</span>
-        </p>
-
-        {/* Stats strip */}
-        <div
-          ref={statsRef}
-          className="animate-fade-up grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto mb-10"
-          style={{ animationDelay: "0.55s" }}
-        >
-          {stats.map((s, i) => (
-            <div
-              key={i}
-              className="glass rounded-2xl px-4 py-4 group hover:bg-white/[0.07] transition-all duration-300 hover:-translate-y-0.5"
+          {/* Name */}
+          <div className="animate-fade-up" style={{ animationDelay: "0.2s" }}>
+            <h1
+              className="font-black leading-none mb-4 text-gradient-hero"
+              style={{ fontSize: "clamp(3.6rem, 8.8vw, 8rem)" }}
             >
-              <div className="text-2xl font-bold text-gradient-blue mb-0.5 group-hover:scale-105 transition-transform">{s.value}</div>
-              <div className="text-[#636366] text-xs">{s.label}</div>
+              Bharath<br />Chandran
+            </h1>
+          </div>
+
+          {/* Roles */}
+          <div className="animate-fade-up flex flex-wrap items-center justify-center gap-3 mb-6 lg:justify-start" style={{ animationDelay: "0.35s" }}>
+            {["Data Engineer", "AI Analytics Specialist", "Microsoft Fabric"].map((r, i) => (
+              <span key={i} className={`text-sm font-medium px-3 py-1 rounded-full glass ${
+                i === 0 ? "text-blue-300"  :
+                i === 1 ? "text-purple-300":
+                          "text-cyan-300"
+              }`}>{r}</span>
+            ))}
+          </div>
+
+          {/* Tagline */}
+          <p
+            className="animate-fade-up text-[#86868b] text-lg max-w-2xl mx-auto leading-relaxed mb-10 lg:mx-0"
+            style={{ animationDelay: "0.45s" }}
+          >
+            6+ years designing scalable data pipelines, AI-enabled analytics &amp; self-service BI
+            across global enterprise — AME · APJ · EMEA.
+            <br />
+            <span className="text-[#a1a1a6]">Master of Business Analytics (FinTech) graduate · University of Auckland</span>
+          </p>
+
+          {/* Stats strip */}
+          <div
+            ref={statsRef}
+            className="animate-fade-up grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto mb-10 lg:mx-0"
+            style={{ animationDelay: "0.55s" }}
+          >
+            {stats.map((s, i) => (
+              <div
+                key={i}
+                className="glass rounded-2xl px-4 py-4 group hover:bg-white/[0.07] transition-all duration-300 hover:-translate-y-0.5"
+              >
+                <div className="text-2xl font-bold text-gradient-blue mb-0.5 group-hover:scale-105 transition-transform">{s.value}</div>
+                <div className="text-[#636366] text-xs">{s.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="animate-fade-up flex flex-col sm:flex-row gap-3 justify-center items-center lg:justify-start" style={{ animationDelay: "0.65s" }}>
+            <a href="mailto:bharathssa16@gmail.com">
+              <Button className="bg-[#0a84ff] hover:bg-[#0071e3] text-white px-8 py-3 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 shadow-lg shadow-blue-500/25 gap-2">
+                <Mail size={16} />
+                Get In Touch
+              </Button>
+            </a>
+            <div className="flex gap-2">
+              {links.map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={l.label}
+                  className={`p-3 glass rounded-full text-[#86868b] border border-white/[0.06] transition-all duration-300 hover:scale-110 hover:bg-white/[0.08] ${l.color}`}
+                >
+                  {l.icon}
+                </a>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
 
-        {/* CTA */}
-        <div className="animate-fade-up flex flex-col sm:flex-row gap-3 justify-center items-center" style={{ animationDelay: "0.65s" }}>
-          <a href="mailto:bharathssa16@gmail.com">
-            <Button className="bg-[#0a84ff] hover:bg-[#0071e3] text-white px-8 py-3 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 shadow-lg shadow-blue-500/25 gap-2">
-              <Mail size={16} />
-              Get In Touch
-            </Button>
-          </a>
-          <div className="flex gap-2">
-            {links.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={l.label}
-                className={`p-3 glass rounded-full text-[#86868b] border border-white/[0.06] transition-all duration-300 hover:scale-110 hover:bg-white/[0.08] ${l.color}`}
-              >
-                {l.icon}
-              </a>
-            ))}
+        <div className="animate-fade-up hero-image-stage mx-auto w-full max-w-[430px] sm:max-w-[520px] lg:mx-0 lg:justify-self-end" style={{ animationDelay: "0.4s" }}>
+          <div className="hero-image-shell group relative">
+            <img
+              src={introImage}
+              alt="Bharath Chandran in a data engineering workspace"
+              className="relative z-10 aspect-[4/5] w-full rounded-[2rem] object-cover shadow-2xl shadow-blue-950/35 transition duration-700 group-hover:scale-[1.018]"
+            />
+            <div className="pointer-events-none absolute inset-0 z-20 rounded-[2rem] ring-1 ring-white/15" />
+            <div className="hero-image-sheen pointer-events-none absolute inset-0 z-20 rounded-[2rem]" />
+            <div className="hero-scan-line pointer-events-none absolute left-[8%] right-[8%] top-0 z-30 h-px bg-cyan-300/70 shadow-[0_0_24px_rgba(50,210,198,0.75)]" />
+            <div className="hero-data-node hero-data-node-1" />
+            <div className="hero-data-node hero-data-node-2" />
+            <div className="hero-data-node hero-data-node-3" />
           </div>
         </div>
       </div>
