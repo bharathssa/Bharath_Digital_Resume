@@ -96,6 +96,7 @@ export const Education = () => {
       school: "University of Auckland, New Zealand",
       period: "Mar 2025 – Jun 2026",
       status: "Completed",
+      grade: "1st Class Distinction · CGPA 7.8/9 (NZ Scale)",
       highlights: [
         "A+ — BUSINFO 702 Information Management (Certificate of Excellence)",
         "Student Choice Best Analysis Award — BUSINFO 704",
