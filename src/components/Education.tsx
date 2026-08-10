@@ -106,6 +106,7 @@ export const Education = () => {
       degree: "PG Diploma in Data Engineering",
       school: "Intellipaat, Bangalore",
       period: "May 2024 – May 2025",
+      grade: "CGPA 8.5/10",
     },
     {
       degree: "Master of Business Administration",
@@ -122,7 +123,7 @@ export const Education = () => {
   ];
 
   const certs = [
-    { icon: "🏆", title: "Microsoft Certified: Fabric Data Engineer Associate", code: "DP-700", detail: "Earned December 2025", link: "https://learn.microsoft.com/en-us/credentials/certifications/fabric-data-engineer-associate/", featured: true },
+    { icon: "🏆", title: "Microsoft Certified: Fabric Data Engineer Associate", code: "DP-700", detail: "Earned December 2025", link: "https://learn.microsoft.com/api/credentials/share/en-us/BharathChandranMadhaiyan-9093/33907A39C3E22FF1?sharingId=4FD144EDC89B9F28", featured: true },
     { icon: "⭐", title: "HackerRank — 5★ Gold Badge in Python", detail: "5-star Gold rating", link: "https://www.hackerrank.com/bharathssa16" },
     { icon: "⭐", title: "HackerRank — 5★ Gold Badge in SQL",    detail: "5-star Gold rating", link: "https://www.hackerrank.com/bharathssa16" },
     { icon: "📊", title: "Kaggle Competition Participant", detail: "Active competition profile", link: "https://www.kaggle.com/" },
